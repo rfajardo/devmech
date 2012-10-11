@@ -102,13 +102,13 @@ $(DEPENDDIR)/%.d: %.c
 
 #SPECIFICS
 
-USBPARSER_PATH = ../../../usbtranslator/src
+USBPARSER_PATH = ../../../usbtranslator
 USBPARSER := $(USBPARSER_PATH)/usbtranslator.py
 
-SPIRITPARSER_PATH = ../../../registertranslator/src
+SPIRITPARSER_PATH = ../../../registertranslator
 SPIRITPARSER := $(SPIRITPARSER_PATH)/registertranslator.py
 
-IDLPARSER_PATH = ../../../idlgenerator/src
+IDLPARSER_PATH = ../../../idlgenerator
 IDLPARSER := $(IDLPARSER_PATH)/idlgenerator.py
 
 pwcblock.c: pwcRegs.xml
