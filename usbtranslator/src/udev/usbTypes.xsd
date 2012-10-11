@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2011 sp1 (http://www.altova.com) by Andreas Kugel (Universität Heidelberg ZITI / Informatik V) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:udev="http://www.ziti.uni-heidelberg.de/XMLSchemas/usbDevice" targetNamespace="http://www.ziti.uni-heidelberg.de/XMLSchemas/usbDevice" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:group name="requestGroup">
+		<xs:sequence>
+			<xs:element name="name" type="xs:Name" minOccurs="0"/>
+			<xs:element name="bRequest">
+				<xs:simpleType>
+					<xs:restriction base="xs:hexBinary">
+						<xs:length value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+	<xs:complexType name="bmRequestTypeType">
+		<xs:sequence>
+			<xs:element name="direction">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="HostToDevice"/>
+						<xs:enumeration value="DeviceToHost"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="type">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="Standard"/>
+						<xs:enumeration value="Class"/>
+						<xs:enumeration value="Vendor"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="recipient">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="Device"/>
+						<xs:enumeration value="Interface"/>
+						<xs:enumeration value="Endpoint"/>
+						<xs:enumeration value="Other"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:group name="wIndexGroup">
+		<xs:choice>
+			<xs:element name="wIndex">
+				<xs:simpleType>
+					<xs:restriction base="xs:hexBinary">
+						<xs:length value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="endpoint" type="xs:Name"/>
+			<xs:element name="interface" type="xs:Name"/>
+		</xs:choice>
+	</xs:group>
+	<xs:complexType name="setupPacketType">
+		<xs:annotation>
+			<xs:documentation>packet type used to define a control transfer</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="name" type="xs:Name"/>
+			<xs:element name="bmRequestType" type="udev:bmRequestTypeType"/>
+			<xs:choice>
+				<xs:element name="requestName" type="xs:Name"/>
+				<xs:group ref="udev:requestGroup"/>
+			</xs:choice>
+			<xs:element name="wValue" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:hexBinary">
+						<xs:length value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:group ref="udev:wIndexGroup" minOccurs="0"/>
+			<xs:element name="wLength" type="xs:unsignedShort" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="bmAttributesType">
+		<xs:sequence>
+			<xs:element name="selfPowered" type="xs:boolean"/>
+			<xs:element name="remoteWakeup" type="xs:boolean"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="endpointAddressType">
+		<xs:sequence>
+			<xs:element name="direction">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="DeviceToHost"/>
+						<xs:enumeration value="HostToDevice"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="number">
+				<xs:simpleType>
+					<xs:restriction base="xs:unsignedByte">
+						<xs:maxInclusive value="15"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="endpointBmAttributesType">
+		<xs:sequence>
+			<xs:element name="usageType">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="Data"/>
+						<xs:enumeration value="Feedback"/>
+						<xs:enumeration value="ImplicitFeedback"/>
+						<xs:enumeration value="Reserved"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="synchronizationType">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="None"/>
+						<xs:enumeration value="Asynchronous"/>
+						<xs:enumeration value="Adaptive"/>
+						<xs:enumeration value="Synchronous"/>
+						<xs:enumeration value="Reserved"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="transferType">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="Control"/>
+						<xs:enumeration value="Isochronous"/>
+						<xs:enumeration value="Bulk"/>
+						<xs:enumeration value="Interrupt"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:group name="descriptorHeaderGroup">
+		<xs:sequence>
+			<xs:element name="bLength" type="xs:unsignedByte"/>
+			<xs:element name="bDescriptorType">
+				<xs:simpleType>
+					<xs:restriction base="xs:hexBinary">
+						<xs:length value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+	<xs:complexType name="deviceDescriptorType">
+		<xs:sequence>
+			<xs:group ref="udev:descriptorHeaderGroup"/>
+			<xs:element name="bcdUSB">
+				<xs:simpleType>
+					<xs:restriction base="xs:hexBinary">
+						<xs:length value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="bDeviceClass">
+				<xs:simpleType>
+					<xs:restriction base="xs:hexBinary">
+						<xs:length value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="bDeviceSubClass">
+				<xs:simpleType>
+					<xs:restriction base="xs:hexBinary">
+						<xs:length value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="bDeviceProtocol">
+				<xs:simpleType>
+					<xs:restriction base="xs:hexBinary">
+						<xs:length value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="bMaxPacketSize0">
+				<xs:simpleType>
+					<xs:restriction base="xs:unsignedByte">
+						<xs:maxInclusive value="64"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="idVendor">
+				<xs:simpleType>
+					<xs:restriction base="xs:hexBinary">
+						<xs:length value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="idProduct">
+				<xs:simpleType>
+					<xs:restriction base="xs:hexBinary">
+						<xs:length value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="bcdDevice">
+				<xs:simpleType>
+					<xs:restriction base="xs:hexBinary">
+						<xs:length value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="iManufacturer" type="xs:unsignedByte"/>
+			<xs:element name="iProduct" type="xs:unsignedByte"/>
+			<xs:element name="iSerialNumber" type="xs:unsignedByte"/>
+			<xs:element name="bNumConfigurations" type="xs:unsignedByte"/>
+			<xs:element name="configurationDescriptor" type="udev:configurationDescriptorType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="configurationDescriptorType">
+		<xs:sequence>
+			<xs:element name="name" type="xs:Name" minOccurs="0"/>
+			<xs:group ref="udev:descriptorHeaderGroup"/>
+			<xs:element name="wTotalLength" type="xs:unsignedShort"/>
+			<xs:element name="bNumInterfaces" type="xs:unsignedByte"/>
+			<xs:element name="bConfigurationValue" type="xs:unsignedByte"/>
+			<xs:element name="iConfiguration" type="xs:unsignedByte"/>
+			<xs:element name="bmAttributes" type="udev:bmAttributesType"/>
+			<xs:element name="bMaxPower" type="xs:unsignedByte"/>
+			<xs:element name="interfaceDescriptorGroup" type="udev:interfaceDescriptorGroupType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="interfaceDescriptorGroupType">
+		<xs:sequence>
+			<xs:element name="name" type="xs:Name" minOccurs="0"/>
+			<xs:element name="endpointLink" type="udev:endpointLinkType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="interfaceDescriptor" type="udev:interfaceDescriptorType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="endpointLinkType">
+		<xs:sequence>
+			<xs:element name="name" type="xs:Name"/>
+			<xs:element name="bEndpointAddress" type="udev:endpointAddressType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="interfaceDescriptorType">
+		<xs:sequence>
+			<xs:element name="name" type="xs:Name" minOccurs="0"/>
+			<xs:group ref="udev:descriptorHeaderGroup"/>
+			<xs:element name="bInterfaceNumber" type="xs:unsignedByte"/>
+			<xs:element name="bAlternateSetting" type="xs:unsignedByte"/>
+			<xs:element name="bNumEndpoints" type="xs:unsignedByte"/>
+			<xs:element name="bInterfaceClass">
+				<xs:simpleType>
+					<xs:restriction base="xs:hexBinary">
+						<xs:length value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="bInterfaceSubClass">
+				<xs:simpleType>
+					<xs:restriction base="xs:hexBinary">
+						<xs:length value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="bInterfaceProtocol">
+				<xs:simpleType>
+					<xs:restriction base="xs:hexBinary">
+						<xs:length value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="iInterface" type="xs:unsignedByte"/>
+			<xs:element name="endpointDescriptor" type="udev:endpointDescriptorType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="endpointDescriptorType">
+		<xs:sequence>
+			<xs:element name="name" type="xs:Name" minOccurs="0"/>
+			<xs:group ref="udev:descriptorHeaderGroup"/>
+			<xs:element name="bEndpointAddress" type="udev:endpointAddressType"/>
+			<xs:element name="bmAttributes" type="udev:endpointBmAttributesType"/>
+			<xs:element name="wMaxPacketSize" type="xs:unsignedShort"/>
+			<xs:element name="bInterval" type="xs:unsignedByte"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="deviceQualifierDescriptorType">
+		<xs:sequence>
+			<xs:group ref="udev:descriptorHeaderGroup"/>
+			<xs:element name="bcdUSB">
+				<xs:simpleType>
+					<xs:restriction base="xs:hexBinary">
+						<xs:length value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="bDeviceClass">
+				<xs:simpleType>
+					<xs:restriction base="xs:hexBinary">
+						<xs:length value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="bDeviceSubClass">
+				<xs:simpleType>
+					<xs:restriction base="xs:hexBinary">
+						<xs:length value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="bDeviceProtocol">
+				<xs:simpleType>
+					<xs:restriction base="xs:hexBinary">
+						<xs:length value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="bMaxPacketSize0" type="xs:unsignedByte"/>
+			<xs:element name="bNumConfigurations" type="xs:unsignedByte"/>
+			<xs:element name="bReserved" type="xs:unsignedByte"/>
+			<xs:element name="otherSpeedconfigurationDescriptor" type="udev:configurationDescriptorType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="stringDescriptorZeroType">
+		<xs:sequence>
+			<xs:group ref="udev:descriptorHeaderGroup"/>
+			<xs:element name="wLANGID" maxOccurs="unbounded">
+				<xs:simpleType>
+					<xs:restriction base="xs:hexBinary">
+						<xs:length value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="unicodeStringDescriptorType">
+		<xs:sequence>
+			<xs:group ref="udev:descriptorHeaderGroup"/>
+			<xs:element name="bString" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

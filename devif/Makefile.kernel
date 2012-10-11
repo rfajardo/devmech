@@ -1,0 +1,54 @@
+VERSION			:=	trunk
+MODULENAME		:=	devif
+CONFIG_DEVIF	:=	m
+
+KVER  := $(shell uname -r)
+DEST  := /lib/modules/$(KVER)/kernel/kernel/drivers/misc/$(MODULENAME)
+
+EXTRA_CFLAGS=-DDEVIF -DCONFIG_DEVIF_DEBUG
+
+EXTRA_SYMBOLS := 
+KBUILD_EXTRA_SYMBOLS := $(addprefix $(PWD)/, $(addsuffix /Module.symvers, $(EXTRA_SYMBOLS)))
+
+INCLUDE_FILES=types.h regtypes.h regdata.h devif.h listutil.h com.h
+
+ifneq ($(KERNELRELEASE),)
+
+$(MODULENAME)-objs := adapt.o com.o comif.o delayedgetrules.o delayedsetrules.o delayedif.o delayedlist.o 
+$(MODULENAME)-objs += getrules.o helperif.o init.o listutil.o modify.o quantify.o regop.o regutil.o setrules.o
+$(MODULENAME)-objs +=  stdif.o userif.o
+
+obj-$(CONFIG_DEVIF) += devif.o
+
+else
+
+KVER  := $(shell uname -r)
+KLINK := $(shell test -e /lib/modules/${KVER}/build/ && echo "build" || echo "source")
+KSRC  := /lib/modules/$(KVER)/$(KLINK)
+PWD   := $(shell pwd)
+DEST  := /lib/modules/$(KVER)/kernel/drivers/misc
+INCLUDE_DIR := $(KSRC)/include/$(MODULENAME)
+INCLUDE_DIRFILES := $(addprefix $(INCLUDE_DIR)/, $(INCLUDE_FILES))
+
+all: 
+	$(MAKE) -C $(KSRC) SUBDIRS=$(PWD) modules
+	
+clean:
+	$(MAKE) -C $(KSRC) SUBDIRS=$(PWD) clean
+
+install:
+	install -d $(INCLUDE_DIR)
+	install -t $(INCLUDE_DIR) $(INCLUDE_FILES)
+	install -d $(DEST)
+	install -m 644 -c $(MODULENAME).ko $(DEST)
+	-/sbin/depmod -a
+	echo "FINISHED"
+
+uninstall:
+	rm -f $(INCLUDE_DIRFILES)
+	rmdir $(INCLUDE_DIR)
+	rm -f $(DEST)/$(MODULENAME).ko	
+	-/sbin/depmod -a
+	echo "FINISHED"
+
+endif

@@ -1,0 +1,47 @@
+
+* How to use effecttv with vloopback ?
+
+You have to load your webcam / capture card kernel module , i.ex :
+
+ modprobe pwc mbufs=3 size=vga fps=15
+
+See dmesg output to know the video device used by your device :
+
+pwc: Registered as /dev/video0
+
+Load vloopback device ,
+
+modprobe vloopack
+
+see dmseg output ( same as above )
+
+Loopback 0 registered, input: video1,output: video2
+
+And run effect on this way : effectv -vloopback [input vloopback device] -device [real video device]:
+
+effectv  effectv  -vloopback /dev/video1 -device /dev/video0
+
+
+* I got "video_init: double buffer capturing with mmap is not supported. Video initialization failed." when i try to use my webcam with quickcam module.
+
+You need to load this kernel module with parameter compatible=2 :
+
+modprobe quickcam compatible=2
+
+
+* How can i use vloopback to use my firewire cam as a V4L device ?
+
+Load vloopback
+
+  modprobe vloopback
+
+You need to use Coriander (http://damien.douxchamps.net/ieee1394/coriander/ ) and set on services tab V4L (http://damien.douxchamps.net/ieee1394/coriander/win_v4l.png).
+
+And then you will have a V4L in /dev/video1.
+
+* Having problems running vloopback ?
+
+load vloopback with debug : 
+
+ modprobe vloopback debug=3
+

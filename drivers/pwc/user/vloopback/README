@@ -1,0 +1,68 @@
+vloopback is a video4linux driver providing video pipes.
+With the driver you can use the output of a user program to feed a program that
+would normally communicate with a video4linux device.
+To achieve this a video pipe consists out of two video4linux devices:
+one for the generating program to write its data to and one for a normal
+video4linux program to read from.
+
+At the moment there are only few programs that can feed the input of the pipe:
+invert and resize, the example programs with the driver and
+motion, my motion detection program.
+
+Just type 'make' and then 'insmod vloopback'.
+If you want more pipes use 'insmod vloopback pipes=N' with N between 1 and 16.
+If you want to create spare pipes use 'spares=N'.
+
+Type 'dmesg' to see which video devices have been created as input and output.
+For example: if you have a camera on /dev/video0 the input pipe will most likely
+be /dev/video1 and the output on /dev/video2.
+e.g. if you want to watch an inverted image of the camera you would start invert
+with /dev/video0 as its input and /dev/video1 as its output.
+Then start a viewing app (such as camstream or xawtv) with as input /dev/video2
+and you can see yourself inverted.
+
+This is a very experimental device driver!
+SMP should work from 0.2 on..... but is untested!
+If it troubles you fix it or tell me how to fix it :)
+
+Using vloopback with xawtv:
+As of 0.83 xawtv will work with vloopback outputs, but you will have to specify
+the size to use. For example: 'xawtv -c /dev/video2 -geometry 320x240'
+
+Jeroen Vreeken, pe1rxq@amsat.org
+
+-------------------------------------------------------------------------------
+
+Module now supports kernel 2.6.x .
+The current version 1.0 has been tested with kernel 2.6.x ( up to 2.6.25 ).
+
+To compile and install :
+
+make ; su - ; make install
+/sbin/modprobe videodev 
+/sbin/modprobe vloopback
+
+To uninstall :
+
+make uninstall ( as root ).
+
+- Problems :
+
+* If you got this message after 'insmod ./vloopback.ko' :
+
+ "insmod: error inserting './vloopback.ko': -1 Unknown symbol in module" 
+
+  Solution : You must load videodev module :
+
+ 'insmod videodev ; insmod ./vloopback.ko'
+
+* If you got this message after 'modprobe vloopback [options]' :
+
+ "FATAL: Error inserting vloopback (/lib/modules/2.6.8-1-k7/kernel/drivers/misc/vloopback.ko): Too many open files in system"
+
+ You probably used dev_offset= as a option , but the video device that vloopback was trying to register was already in use, maybe the value used for dev_offeset was too high.
+
+  Solution : Try to use a lower value for dev_offset= or even better don't use it .
+
+Angel Carpintero, sackmotion@gmail.com
+Kenneth Lavrsen, kenneth@lavrsen.dk

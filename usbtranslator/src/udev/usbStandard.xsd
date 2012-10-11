@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2011 sp1 (http://www.altova.com) by Andreas Kugel (Universität Heidelberg ZITI / Informatik V) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:udev="http://www.ziti.uni-heidelberg.de/XMLSchemas/usbDevice" targetNamespace="http://www.ziti.uni-heidelberg.de/XMLSchemas/usbDevice" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="./usbTypes.xsd"/>
+	<xs:complexType name="usbStandardDescriptorsType">
+		<xs:sequence>
+			<xs:element name="deviceDescriptor" type="udev:deviceDescriptorType">
+				<xs:unique name="configurationDescriptorName">
+					<xs:selector xpath="udev:configurationDescriptor"/>
+					<xs:field xpath="udev:name"/>
+				</xs:unique>
+			</xs:element>
+			<xs:element name="deviceQualifierDescriptor" type="udev:deviceQualifierDescriptorType" minOccurs="0"/>
+			<xs:element name="stringDescriptorZero" type="udev:stringDescriptorZeroType" minOccurs="0"/>
+			<xs:element name="unicodeStringDescriptor" type="udev:unicodeStringDescriptorType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="setupPacketsType">
+		<xs:sequence>
+			<xs:element name="setupPacket" type="udev:setupPacketType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="usbCom">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="standardDescriptors" type="udev:usbStandardDescriptorsType"/>
+				<xs:element name="requests" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="request" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:group ref="udev:requestGroup"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="setupPackets" type="udev:setupPacketsType" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+		<xs:key name="requestNames">
+			<xs:selector xpath="udev:requests/udev:request"/>
+			<xs:field xpath="udev:name"/>
+		</xs:key>
+		<xs:keyref name="requestName" refer="udev:requestNames">
+			<xs:selector xpath="udev:setupPackets/udev:setupPacket"/>
+			<xs:field xpath="udev:requestName"/>
+		</xs:keyref>
+		<xs:key name="endpointName">
+			<xs:selector xpath="udev:standardDescriptors/udev:deviceDescriptor/udev:configurationDescriptor/udev:interfaceDescriptorGroup/udev:interfaceDescriptor/udev:endpointDescriptor"/>
+			<xs:field xpath="udev:name"/>
+		</xs:key>
+		<xs:keyref name="endpoint" refer="udev:endpointName">
+			<xs:selector xpath="udev:setupPackets/udev:setupPacket"/>
+			<xs:field xpath="udev:endpoint"/>
+		</xs:keyref>
+		<xs:key name="otherEndpointName">
+			<xs:selector xpath="udev:standardDescriptors/udev:deviceQualifierDescriptor/udev:otherSpeedconfigurationDescriptor/udev:interfaceDescriptors/udev:endpointDescriptor"/>
+			<xs:field xpath="udev:name"/>
+		</xs:key>
+		<xs:keyref name="otherEndpoint" refer="udev:otherEndpointName">
+			<xs:selector xpath="udev:setupPackets/udev:setupPacket"/>
+			<xs:field xpath="udev:endpoint"/>
+		</xs:keyref>
+		<xs:key name="interfaceName">
+			<xs:selector xpath="udev:standardDescriptors/udev:deviceDescriptor/udev:configurationDescriptor/udev:interfaceDescriptorGroup/udev:interfaceDescriptor"/>
+			<xs:field xpath="udev:name"/>
+		</xs:key>
+		<xs:keyref name="interface" refer="udev:interfaceName">
+			<xs:selector xpath="udev:setupPackets/udev:setupPacket"/>
+			<xs:field xpath="udev:interface"/>
+		</xs:keyref>
+		<xs:key name="otherInterfaceName">
+			<xs:selector xpath="udev:standardDescriptors/udev:deviceQualifierDescriptor/udev:otherSpeedconfigurationDescriptor/udev:interfaceDescriptors"/>
+			<xs:field xpath="udev:name"/>
+		</xs:key>
+		<xs:keyref name="otherInterface" refer="udev:otherInterfaceName">
+			<xs:selector xpath="udev:setupPackets/udev:setupPacket"/>
+			<xs:field xpath="udev:interface"/>
+		</xs:keyref>
+		<xs:unique name="setupPacketName">
+			<xs:selector xpath="udev:setupPackets/udev:setupPacket"/>
+			<xs:field xpath="udev:name"/>
+		</xs:unique>
+	</xs:element>
+</xs:schema>

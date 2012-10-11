@@ -1,0 +1,53 @@
+VERSION			:=	trunk
+MODULENAME		:=	usbif
+CONFIG_USBIF	:=	m
+
+KVER  := $(shell uname -r)
+DEST  := /lib/modules/$(KVER)/kernel/kernel/drivers/misc/$(MODULENAME)
+
+EXTRA_CFLAGS=-DUSBIF -DCONFIG_USBIF_DEBUG
+
+EXTRA_SYMBOLS := ../devif
+KBUILD_EXTRA_SYMBOLS := $(addprefix $(PWD)/, $(addsuffix /Module.symvers, $(EXTRA_SYMBOLS)))
+
+INCLUDE_FILES=usbdata.h usbint.h usbif.h streamif.h com.h
+
+ifneq ($(KERNELRELEASE),)
+
+$(MODULENAME)-objs := helperusb.o init.o intstream.o isostream.o streamif.o comif.o usbif_if.o usbint.o  
+$(MODULENAME)-objs += endpoint.o process.o thread.o transfer.o
+
+obj-$(CONFIG_USBIF) += usbif.o
+
+else
+
+KVER  := $(shell uname -r)
+KLINK := $(shell test -e /lib/modules/${KVER}/build/ && echo "build" || echo "source")
+KSRC  := /lib/modules/$(KVER)/$(KLINK)
+PWD   := $(shell pwd)
+DEST  := /lib/modules/$(KVER)/kernel/drivers/misc
+INCLUDE_DIR := $(KSRC)/include/$(MODULENAME)
+INCLUDE_DIRFILES := $(addprefix $(INCLUDE_DIR)/, $(INCLUDE_FILES))
+
+all: 
+	$(MAKE) -C $(KSRC) SUBDIRS=$(PWD) modules
+	
+clean:
+	$(MAKE) -C $(KSRC) SUBDIRS=$(PWD) clean
+
+install:
+	install -d $(INCLUDE_DIR)
+	install -t $(INCLUDE_DIR) $(INCLUDE_FILES)
+	install -d $(DEST)
+	install -m 644 -c $(MODULENAME).ko $(DEST)
+	-/sbin/depmod -a
+	echo "FINISHED"
+
+uninstall:
+	rm -f $(INCLUDE_DIRFILES)
+	rmdir $(INCLUDE_DIR)
+	rm -f $(DEST)/$(MODULENAME).ko	
+	-/sbin/depmod -a
+	echo "FINISHED"
+
+endif

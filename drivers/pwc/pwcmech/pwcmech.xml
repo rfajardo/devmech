@@ -1,0 +1,532 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mechanismIdl name="pwcmech">
+	<resource>pwcmech_if.h</resource>
+	<internalResource>usbcom.h</internalResource>
+	
+	<extendedFiniteStateMachine>
+		<declaration>
+			<states>
+				<state>idle</state>
+				<state>ready</state>
+				<state>streaming</state>
+			</states>
+			<variables>
+				<variable>videoSet</variable>
+				<variable>commandSent</variable>
+				<variable>videoBufferAssigned</variable>
+				<variable>videoCallbackAssigned</variable>
+				<variable>power</variable>
+				<variable>videoBufferLevel</variable>
+			</variables>
+		</declaration>
+
+		<behavior>
+			<assignments>
+				<assignment>
+					<event>setVideoMode</event>
+					<cmd>videoSet = true</cmd>
+				</assignment>
+				<assignment>
+					<event>sendVideoCommand</event>
+					<cmd>commandSent = true</cmd>
+				</assignment>
+				<assignment>
+					<event>assignVideoBuffer</event>
+					<cmd>videoBufferAssigned = true</cmd>
+				</assignment>
+				<assignment>
+					<event>assignVideoBuffer</event>
+					<cmd>videoBufferLevel += len</cmd>
+				</assignment>
+				<assignment>
+					<event>registerVideoCallback</event>
+					<cmd>videoCallbackAssigned = true</cmd>
+				</assignment>
+				<assignment>
+					<event>setPower</event>
+					<cmd>power = value</cmd>
+				</assignment>
+			</assignments>
+			
+			<transitions>
+				<transition from="idle" to="ready">
+					<name>initialize</name>
+					<trigger>
+						<event>setVideoMode</event>
+						<event>sendVideoCommand</event>
+					</trigger>
+					<guard>videoSet and commandSent</guard>
+				</transition>
+				<transition from="ready" to="streaming">
+					<name>configure</name>
+					<trigger>
+						<event>assignVideoBuffer</event>
+						<event>registerVideoCallback</event>
+						<event>setPower</event>
+					</trigger>
+					<guard>videoBufferAssigned and videoCallbackAssigned and power == 0</guard>
+				</transition>
+				<transition from="ready" to="idle">
+					<name>finish</name>
+					<trigger>
+						<event>unassignVideoBuffers</event>
+					</trigger>
+					<update>
+						<cmd>videoBufferAssigned = false</cmd>
+						<cmd>videoSet = false</cmd>
+						<cmd>commandSent = false</cmd>
+						<cmd>videoBufferLevel = 0</cmd>
+					</update>
+				</transition>
+				<transition from="streaming" to="ready">
+					<name>release</name>
+					<trigger>
+						<event>releaseVideoCallback</event>
+					</trigger>
+					<update>
+						<cmd>videoCallbackAssigned = false</cmd>
+					</update>
+				</transition>
+				<transition from="streaming" to="ready">
+					<name>powerOff</name>
+					<trigger>
+						<event>setPower</event>
+					</trigger>
+					<guard>power == 0xFF</guard>
+				</transition>
+			</transitions>
+		</behavior>
+		
+		<start>
+			<state>idle</state>
+			<variables>
+				<cmd>videoSet = false</cmd>
+				<cmd>commandSent = false</cmd>
+				<cmd>videoBufferAssigned = false</cmd>
+				<cmd>videoCallbackAssigned = false</cmd>
+				<cmd>power = 0xFF</cmd>
+				<cmd>videoBufferLevel = 0</cmd>
+			</variables>
+		</start>
+	</extendedFiniteStateMachine>
+	
+	
+	<interface name="pwcmech">
+		<operation name="setAgcMode">
+			<parameters>
+				<in name="mode" type="value"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_setAgcMode</internal>
+		</operation>
+		<operation name="getAgcMode">
+			<parameters>
+				<out name="mode" type="value"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_getAgcMode</internal>
+		</operation>
+		<operation name="setShutterMode">
+			<parameters>
+				<in name="mode" type="value"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_setShutterMode</internal>
+		</operation>
+		<operation name="getShutterMode">
+			<parameters>
+				<out name="mode" type="value"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_getShutterMode</internal>
+		</operation>
+		<operation name="setAwbMode">
+			<parameters>
+				<in name="mode" type="value"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_setAwbMode</internal>
+		</operation>
+		<operation name="getAwbMode">
+			<parameters>
+				<out name="mode" type="value"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_getAwbMode</internal>
+		</operation>
+		<operation name="setContourMode">
+			<parameters>
+				<in name="mode" type="value"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_setContourMode</internal>
+		</operation>
+		<operation name="getContourMode">
+			<parameters>
+				<out name="mode" type="value"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_getContourMode</internal>
+		</operation>
+		<operation name="setBrightness">
+			<parameters>
+				<in name="value" type="value"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_setBrightness</internal>
+		</operation>
+		<operation name="getBrightness">
+			<parameters>
+				<out name="value" type="value"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_getBrightness</internal>
+		</operation>
+		<operation name="setContrast">
+			<parameters>
+				<in name="value" type="value"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_setContrast</internal>
+		</operation>
+		<operation name="getContrast">
+			<parameters>
+				<out name="value" type="value"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_getContrast</internal>
+		</operation>
+		<operation name="setGamma">
+			<parameters>
+				<in name="value" type="value"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_setGamma</internal>
+		</operation>
+		<operation name="getGamma">
+			<parameters>
+				<out name="value" type="value"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_getGamma</internal>
+		</operation>
+		<operation name="setSaturation">
+			<parameters>
+				<in name="value" type="value"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_setSaturation</internal>
+		</operation>
+		<operation name="getSaturation">
+			<parameters>
+				<out name="value" type="value"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_getSaturation</internal>
+		</operation>
+		<operation name="setAgc">
+			<parameters>
+				<in name="value" type="value"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_setAgc</internal>
+		</operation>
+		<operation name="getAgc">
+			<parameters>
+				<out name="value" type="value"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_getAgc</internal>
+		</operation>
+		<operation name="setShutterSpeed">
+			<parameters>
+				<in name="value" type="value"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_setShutterSpeed</internal>
+		</operation>
+		<operation name="getShutterSpeed">
+			<parameters>
+				<out name="value" type="value"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_getShutterSpeed</internal>
+		</operation>
+		<operation name="setRedGain">
+			<parameters>
+				<in name="value" type="value"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_setRedGain</internal>
+		</operation>
+		<operation name="getRedGain">
+			<parameters>
+				<out name="value" type="value"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_getRedGain</internal>
+		</operation>
+		<operation name="setBlueGain">
+			<parameters>
+				<in name="value" type="value"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_setBlueGain</internal>
+		</operation>
+		<operation name="getBlueGain">
+			<parameters>
+				<out name="value" type="value"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_getBlueGain</internal>
+		</operation>
+		<operation name="setWbSpeed">
+			<parameters>
+				<in name="value" type="value"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_setWbSpeed</internal>
+		</operation>
+		<operation name="getWbSpeed">
+			<parameters>
+				<out name="value" type="value"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_getWbSpeed</internal>
+		</operation>
+		<operation name="setWbDelay">
+			<parameters>
+				<in name="value" type="value"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_setWbDelay</internal>
+		</operation>
+		<operation name="getWbDelay">
+			<parameters>
+				<out name="value" type="value"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_getWbDelay</internal>
+		</operation>
+		<operation name="setLeds">
+			<parameters>
+				<in name="on_period" type="value"/>
+				<in name="off_period" type="value"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_setLeds</internal>
+		</operation>
+		<operation name="getLeds">
+			<parameters>
+				<out name="on_period" type="value"/>
+				<out name="off_period" type="value"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_getLeds</internal>
+		</operation>
+		<operation name="setContour">
+			<parameters>
+				<in name="value" type="value"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_setContour</internal>
+		</operation>
+		<operation name="getContour">
+			<parameters>
+				<out name="value" type="value"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_getContour</internal>
+		</operation>
+		<operation name="setBacklight">
+			<parameters>
+				<in name="value" type="value"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_setBacklight</internal>
+		</operation>
+		<operation name="getBacklight">
+			<parameters>
+				<out name="value" type="value"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_getBacklight</internal>
+		</operation>
+		<operation name="setColourMode">
+			<parameters>
+				<in name="value" type="value"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_setColourMode</internal>
+		</operation>
+		<operation name="getColourMode">
+			<parameters>
+				<out name="value" type="value"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_getColourMode</internal>
+		</operation>
+		<operation name="setFlickerMode">
+			<parameters>
+				<in name="value" type="value"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_setFlickerMode</internal>
+		</operation>
+		<operation name="getFlickerMode">
+			<parameters>
+				<out name="value" type="value"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_getFlickerMode</internal>
+		</operation>
+		<operation name="setDynamicNoise">
+			<parameters>
+				<in name="value" type="value"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_setDynamicNoise</internal>
+		</operation>
+		<operation name="getDynamicNoise">
+			<parameters>
+				<out name="value" type="value"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_getDynamicNoise</internal>
+		</operation>
+		<operation name="getSensor">
+			<parameters>
+				<out name="value" type="value"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_getSensor</internal>
+		</operation>
+		<operation name="setPower">
+			<parameters>
+				<in name="value" type="value"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_setPower</internal>
+		</operation>
+		<operation name="setMotor">
+			<parameters>
+				<in name="pan" type="value"/>
+				<in name="tilt" type="value"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_setMotor</internal>
+			<postCondition mode="timing">5000</postCondition>
+		</operation>
+		<operation name="resetMotor">
+			<parameters>
+				<in name="pan" type="value"/>
+				<in name="tilt" type="value"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_resetMotor</internal>
+			<postCondition mode="timing">5000</postCondition>
+		</operation>
+		<operation name="restoreUser">
+			<return type="idlError"/>
+			<internal>_restoreUser</internal>
+		</operation>
+		<operation name="saveUser">
+			<return type="idlError"/>
+			<internal>_saveUser</internal>
+		</operation>
+		<operation name="restoreFactory">
+			<return type="idlError"/>
+			<internal>_restoreFactory</internal>
+		</operation>
+		<operation name="getMotorStatus">
+			<parameters>
+				<in name="buf" type="stream"/>
+				<in name="len" type="value"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_getMotorStatus</internal>
+		</operation>
+		<operation name="sendVideoCommand">
+			<parameters>
+				<in name="buf" type="stream"/>
+				<in name="len" type="size_t"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_sendVideoCommand</internal>
+			<preCondition mode="state">idle</preCondition>
+		</operation>
+		<operation name="setVideoMode">
+			<parameters>
+				<in name="mode" type="value"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_setVideoMode</internal>
+			<preCondition mode="state">idle</preCondition>
+		</operation>
+		<operation name="assignVideoBuffer">
+			<parameters>
+				<in name="buf" type="stream"/>
+				<in name="len" type="value"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_assignVideoBuffer</internal>
+			<preCondition mode="state">ready</preCondition>
+		</operation>
+		<operation name="unassignVideoBuffers">
+			<return type="idlError"/>
+			<internal>_unassignVideoBuffers</internal>
+			<preCondition mode="state">ready</preCondition>
+		</operation>
+		<operation name="registerVideoCallback">
+			<parameters>
+				<in name="func" type="callback"/>
+				<in name="context" type="context"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_registerVideoCallback</internal>
+			<preCondition mode="state">ready</preCondition>
+			<preCondition mode="variable">videoBufferLevel >= 2*10*devmech->com->standard_descriptors.highspeed.cameraStream.Video->wMaxPacketSize</preCondition>
+		</operation>
+		<operation name="acknowledgeVideoCallback">
+			<return type="idlError"/>
+			<internal>_acknowledgeVideoCallback</internal>
+			<preCondition mode="state">streaming</preCondition>
+		</operation>
+		<operation name="releaseVideoCallback">
+			<return type="idlError"/>
+			<internal>_releaseVideoCallback</internal>
+		</operation>
+		<operation name="assignPhotoBuffer">
+			<parameters>
+				<in name="buf" type="stream"/>
+				<in name="len" type="value"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_assignPhotoBuffer</internal>
+			<preCondition mode="state">ready</preCondition>
+		</operation>
+		<operation name="unassignPhotoBuffers">
+			<return type="idlError"/>
+			<internal>_unassignPhotoBuffers</internal>
+			<preCondition mode="state">ready</preCondition>
+		</operation>
+		<operation name="registerPhotoCallback">
+			<parameters>
+				<in name="func" type="callback"/>
+				<in name="context" type="context"/>
+			</parameters>
+			<return type="idlError"/>
+			<internal>_registerPhotoCallback</internal>
+			<preCondition mode="state">ready</preCondition>
+		</operation>
+		<operation name="acknowledgePhotoCallback">
+			<return type="idlError"/>
+			<internal>_acknowledgePhotoCallback</internal>
+			<preCondition mode="state">streaming</preCondition>
+		</operation>
+		<operation name="releasePhotoCallback">
+			<return type="idlError"/>
+			<internal>_releasePhotoCallback</internal>
+		</operation>
+	</interface>
+</mechanismIdl>

@@ -1,0 +1,148 @@
+<HTML>
+<HEAD>
+    <TITLE>
+	Video4Linux loopback API
+    </TITLE>
+    <H1>
+        Video4Linux loopback API
+    </H1>
+</HEAD>
+<BODY bgcolor="white">
+    <P>
+	Author: Jeroen Vreeken (pe1rxq@amsat.org)<BR>
+	Version: 0.90<BR>
+	Date: 31-01-2001<BR>
+    </P>
+    <P>
+        <H2>
+    	    Introduction:
+	</H2>
+	This document describes the API for the Video4Linux loopback driver.
+	The driver implements a video pipe using two video4linux devices.
+	The first device is used by the program supplying the data,
+	from now on this program will be refered to with <I>'pusher'</I>.<BR>
+	The second device acts as if it were a normall video4linux device,
+	it should be usable by any application that honours the video4linux
+	specifications. This application will from now on be refered to as
+	<I>'client'</I>.<BR>
+	The calls and ioctls mentioned in this document refer to those
+	as described in the Video4Linux API.
+	<BR>
+	The loopback device has two operating modes:
+	<UL>
+	    <LI>
+		A simple one-copy mode in which <I>pusher</I> specifies the
+		size of the images and the used palette and uses write to
+		push its images to the pipe.<BR>
+		This mode is mostly for feeding fixed size images without any
+		knowledge about <I>client</I>.
+	    </LI>
+	    <LI>
+		A zero-copy mode in which <I>pusher</I> regularly polls the
+		device if <I>client</I> does an ioctl.<BR> 
+		In this mode <I>pusher</I> has almost complete control over the
+		devices behaviour and it will be mainly used to implement
+		complex multiple tuner/channel/size configurations.
+		With this mode it should be possible to use the Xvideo
+		extensions as normal video4linux capture devices.
+	    </LI>
+	</UL>
+    </P>
+    <P align=left>
+	<H2>
+	    Locating a free pipe
+	</H2>
+	In order to find an unused pipe <I>pusher</I> will have to scan
+	the contents of /proc/video/vloopback/<BR>
+	Each pipe will have its own entry in the form of <I>vloopback0</I> to
+	<I>vloopbackN</I>, N being the total number of available pipes-1.<BR>
+	There will also be a general <I>vloopbacks</I> file which will contain
+	information on all entries.
+	<BR>
+	Each of these files will have references to the input and output
+	video device and will also indicate if either of them is currently
+	in use.<BR>
+	<BR>
+	Once <I>pusher</I> has found a free pipe it can claim it by simply
+	opening the input device.
+    </P>
+    <P align=left>
+	<H2>
+	    One-copy mode
+	</H2>
+	In this mode <I>pusher</I> only has to provide images using the 
+	<B>write()</B> call,
+	the driver will handle the communication with <I>client</I> or
+	will drop the images if the output is unused.
+	To <I>client</I> the device will closely resemble a webcam driver.<BR>
+	<BR>
+	In order to use it <I>pusher</I> will open the input device.
+	Before writing it will first have to set the palette it is going to use
+	by calling <B>VIDIOCSPICT</B>, and the size by calling 
+	<B>VIDIOCSWIN</B>.
+	After this it can call <B>write()</B> for each frame it wants to send
+	to the pipe.<BR>
+	<BR>
+	When there is no application using the device the driver will simply
+	drop the frames which will result in a 'no-copy' situation while
+	writing to an unused pipe.<BR>
+	<I>Note: when client is using read() instead of mmap() the driver will
+	actually use a double copy.</I>
+    </P>
+    <P align=left>
+	<H2>
+	    Zero-copy mode
+	</H2>
+	In this mode the driver will forward nearly all ioctls to
+	<I>pusher</I>.<BR>
+	<BR>
+	To initiate this mode <I>pusher</I> will have to call <B>mmap()</B>
+	with the size of the requested buffer.
+	The driver will allocate memory for this buffer and <I>pusher</I> will
+	gain access to it.<BR>
+	<I>Note: as the allocated memory might be in use by client, pusher is
+	NOT allowed to touch it under any circumstances with the only exeption
+	being between <B>VIDIOCMCAPTURE</B> and <B>VIDIOCSYNC</B>.</I><BR>
+	<BR>
+	<B>
+	    Handling ioctls
+	</B><BR>
+	<BR>
+	When <I>client</I> has issued an ioctl <I>pusher</I> will receive a
+	<B>SIGIO</B> signal.
+	Pusher may check to see if it is comming from vloopback by calling
+	<B>poll()</B> first.
+	It then has to respond by calling <B>read()</B>
+	with a large enough buffer for the largest possible ioctl data
+	structure plus <B>sizeof(unsigned long int)</B>. <I>(The largest ioctl data structure is 280 bytes
+	in linux kernel 2.4.0-test10pre1, a buffer of 1024 bytes is recommended)
+	</I><BR>
+	The first bytes of this buffer will be the ioctl number.
+	This number is an unsigned long int, the remaining data is the data supplied by <I>client</I>.
+	<I>Pusher</I> will now have to handle this ioctl.<BR>
+	<BR>
+	If it is an ioctl requesting data <I>pusher</I> will answer it by
+	calling the ioctl with the requested data.<BR>
+	If it is an ioctl setting data <I>pusher</I> will call the ioctl with
+	the exact same data to accept it.<BR>
+	<BR>
+	<B>
+	    Handling read
+	</B><BR>
+	<BR>
+	<I>Pusher</I> will not need to handle any read requests because the
+	kernel module will fake an mmap and sync call for it.<BR>
+	<BR>
+	<B>
+	    Starting and stopping capture
+	</B><BR>
+	<BR>
+	The first time <B>VIDIOCMCAPTURE</B> is called <I>pusher</I> should
+	initialize capture and start capturing of the requested frames into
+	the mmapped buffer.<BR>
+	When <I>client</I> closes its device an 'ioctl' 0 will be send with
+	no data, <I>pusher</I> will tell the hardware to stop.
+	<BR>
+    </P>
+</BODY>
+</HTML>

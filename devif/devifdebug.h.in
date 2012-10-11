@@ -1,0 +1,91 @@
+/*
+ * devifdebug.h
+ *
+ *  Created on: May 24, 2011
+ *      Author: rfajardo
+ */
+
+#ifndef DEVIFDEBUG_H_
+#define DEVIFDEBUG_H_
+
+
+#define DEVNAME "devif: "
+
+#define devif_trace 				@DEVIF_TRACE@
+
+#cmakedefine CONFIG_DEVIF_DEBUG
+
+
+/* Trace certain actions in the driver */
+#define DEVIF_DEBUG_LEVEL_IF		(1<<0)
+#define DEVIF_DEBUG_LEVEL_RULES		(1<<1)
+#define DEVIF_DEBUG_LEVEL_MODIFY	(1<<2)
+#define DEVIF_DEBUG_LEVEL_ADAPT		(1<<3)
+#define DEVIF_DEBUG_LEVEL_REGOP		(1<<4)
+#define DEVIF_DEBUG_LEVEL_COM		(1<<5)
+#define DEVIF_DEBUG_LEVEL_CACHE		(1<<6)
+#define DEVIF_DEBUG_LEVEL_TRACE		(1<<8)
+
+
+
+#define DEVIF_DEBUG_IF(fmt, @VARIADIC_DECLARATION@) 		DEVIF_DEBUG(IF, fmt, ##@VARIABLE_ARGUMENT@)
+#define DEVIF_DEBUG_RULES(fmt, @VARIADIC_DECLARATION@) 	DEVIF_DEBUG(RULES, fmt, ##@VARIABLE_ARGUMENT@)
+#define DEVIF_DEBUG_MODIFY(fmt, @VARIADIC_DECLARATION@)	DEVIF_DEBUG(MODIFY, fmt, ##@VARIABLE_ARGUMENT@)
+#define DEVIF_DEBUG_ADAPT(fmt, @VARIADIC_DECLARATION@) 	DEVIF_DEBUG(ADAPT, fmt, ##@VARIABLE_ARGUMENT@)
+#define DEVIF_DEBUG_REGOP(fmt, @VARIADIC_DECLARATION@)		DEVIF_DEBUG(REGOP, fmt, ##@VARIABLE_ARGUMENT@)
+#define DEVIF_DEBUG_COM(fmt, @VARIADIC_DECLARATION@) 		DEVIF_DEBUG(COM, fmt, ##@VARIABLE_ARGUMENT@)
+#define DEVIF_DEBUG_CACHE(fmt, @VARIADIC_DECLARATION@) 	DEVIF_DEBUG(CACHE, fmt, ##@VARIABLE_ARGUMENT@)
+#define DEVIF_DEBUG_TRACE(fmt, @VARIADIC_DECLARATION@) 	DEVIF_DEBUG(TRACE, fmt, ##@VARIABLE_ARGUMENT@)
+
+
+
+#ifdef CONFIG_DEVIF_DEBUG
+
+#ifdef __KERNEL__
+#define DEVIF_DEBUG(level, fmt, @VARIADIC_DECLARATION@) do {\
+	  if ((DEVIF_DEBUG_LEVEL_ ##level) & devif_trace) \
+	     printk(KERN_DEBUG DEVNAME #level ": " fmt, ##@VARIABLE_ARGUMENT@); \
+	  } while(0)
+
+#define DEVIF_ERROR(fmt, @VARIADIC_DECLARATION@) printk(KERN_ERR DEVNAME fmt, ##@VARIABLE_ARGUMENT@)
+#define DEVIF_WARNING(fmt, @VARIADIC_DECLARATION@) printk(KERN_WARNING DEVNAME fmt, ##@VARIABLE_ARGUMENT@)
+#define DEVIF_INFO(fmt, @VARIADIC_DECLARATION@) printk(KERN_INFO DEVNAME fmt, ##@VARIABLE_ARGUMENT@)
+#define DEVIF_TRACE(fmt, @VARIADIC_DECLARATION@) DEVIF_DEBUG(TRACE, fmt, ##@VARIABLE_ARGUMENT@)
+
+#else
+#include <stdio.h>
+#define DEVIF_DEBUG(level, fmt, @VARIADIC_DECLARATION@) do {\
+	  if ((DEVIF_DEBUG_LEVEL_ ##level) & devif_trace) \
+		  fprintf(stderr, "DEBUG: " DEVNAME #level ": " fmt, ##@VARIABLE_ARGUMENT@); \
+	  } while(0)
+
+#define DEVIF_ERROR(fmt, @VARIADIC_DECLARATION@) fprintf(stderr, "ERROR: " DEVNAME fmt, ##@VARIABLE_ARGUMENT@)
+#define DEVIF_WARNING(fmt, @VARIADIC_DECLARATION@) fprintf(stderr, "WARNING: " DEVNAME fmt, ##@VARIABLE_ARGUMENT@)
+#define DEVIF_INFO(fmt, @VARIADIC_DECLARATION@) fprintf(stderr, "INFO: " DEVNAME fmt, ##@VARIABLE_ARGUMENT@)
+#define DEVIF_TRACE(fmt, @VARIADIC_DECLARATION@) DEVIF_DEBUG(TRACE, fmt, ##@VARIABLE_ARGUMENT@)
+
+#endif
+
+#else /* if !CONFIG_DEVIF_DEBUG */
+
+#ifdef __KERNEL__
+#define DEVIF_ERROR(fmt, @VARIADIC_DECLARATION@) printk(KERN_ERR DEVNAME fmt, ##@VARIABLE_ARGUMENT@)
+#define DEVIF_WARNING(fmt, @VARIADIC_DECLARATION@) printk(KERN_WARNING DEVNAME fmt, ##@VARIABLE_ARGUMENT@)
+#define DEVIF_INFO(fmt, @VARIADIC_DECLARATION@) printk(KERN_INFO DEVNAME fmt, ##@VARIABLE_ARGUMENT@)
+#define DEVIF_TRACE(fmt, @VARIADIC_DECLARATION@) do { } while(0)
+#define DEVIF_DEBUG(level, fmt, @VARIADIC_DECLARATION@) do { } while(0)
+
+#else
+#include <stdio.h>
+#define DEVIF_ERROR(fmt, @VARIADIC_DECLARATION@) fprintf(stderr, "ERROR: " DEVNAME fmt, ##@VARIABLE_ARGUMENT@)
+#define DEVIF_WARNING(fmt, @VARIADIC_DECLARATION@) fprintf(stderr, "WARNING: " DEVNAME fmt, ##@VARIABLE_ARGUMENT@)
+#define DEVIF_INFO(fmt, @VARIADIC_DECLARATION@) fprintf(stderr, "INFO: " DEVNAME fmt, ##@VARIABLE_ARGUMENT@)
+#define DEVIF_TRACE(fmt, @VARIADIC_DECLARATION@) do { } while(0)
+#define DEVIF_DEBUG(level, fmt, @VARIADIC_DECLARATION@) do { } while(0)
+
+#endif
+
+#endif
+
+
+#endif /* DEVIFDEBUG_H_ */

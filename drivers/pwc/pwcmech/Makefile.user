@@ -1,0 +1,130 @@
+
+#USER INPUT
+SRCS = pwcblock.c usbcom.c _pwcmech.c pwcmech_if.c init.c #main.c
+TARGET = #pwcmech
+TARGETLIB = pwcmech
+MODEL = static  	#dynamic|static
+VERSION = 0.1
+MODE = debug		#release|debug
+
+INCLUDEDIRS = ../../../ /usr/include/libusb-1.0
+#libsystemc or systemc (system ignores lib at the beginning)
+LIBNAMES = devif usbif usb-1.0
+LIBDIRS = ../../../devif/Build ../../../usbif /usr/lib
+DEPENDDIR = ./depend
+
+
+#CONFIGURATION
+DEBUGPARAM = CONFIG_PWCMECH_DEBUG PWCMECH_DEBUG_LEVEL=2 #CONFIG_DEVCONTRACT_DEBUG
+RELEASEPARAM = 
+
+DEBUGFLAGS = -g -O0
+RELEASEFLAGS = -O2 -fomit-frame-pointer
+
+CFLAGS = -Wall
+CC = gcc
+
+
+
+#MECHANICS
+INCLUDESPATH = $(addprefix -I, $(INCLUDEDIRS))
+LIBSPATH = $(addprefix -L, $(LIBDIRS))
+LIBSLINKAGE = $(addprefix -l, $(subst lib, , $(LIBNAMES)) )
+COMMA = ,
+RPATH = $(addprefix -Wl$(COMMA)-R, $(LIBDIRS))
+
+OBJS = $(addsuffix .o, $(basename $(SRCS)))
+DEPS = $(addprefix $(DEPENDDIR)/, $(addsuffix .d, $(basename $(SRCS) ) ) )
+
+STATICLIB = $(addprefix lib, $(addsuffix .a, $(TARGETLIB) ) )
+DYNAMICLIB = $(addprefix lib, $(addsuffix .so, $(TARGETLIB) ) )
+SONAME = $(addsuffix .$(VERSION), $(DYNAMICLIB))
+
+ifeq (debug,$(findstring debug, $(MODE)))
+CFLAGS += $(DEBUGFLAGS) $(addprefix -D, $(DEBUGPARAM))
+else
+CFLAGS += $(RELEASEFLAGS) $(addprefix -D, $(RELEASEPARAM))
+endif
+
+ifdef TARGETLIB
+ifeq (dynamic,$(findstring dynamic, $(MODEL)))
+TARGET = $(DYNAMICLIB)
+CFLAGS += -fPIC
+else
+TARGET = $(STATICLIB)
+endif
+endif
+
+
+#MAKEFILE RULES
+all: $(TARGET)
+
+depend: $(DEPS)
+
+docs: Doxyfile
+	doxygen
+
+clean:
+	rm -f *.o *~ $(TARGET) $(STATICLIB) $(DYNAMICLIB) $(SONAME) usbcom.h usbcom.c pwcblock.h pwcblock.c pwcmech.h _pwcmech.c devcontract.h
+
+distclean:
+	make clean
+	rm -rf $(DEPENDDIR) Doxygen
+
+
+-include $(DEPS)
+
+
+ifndef TARGETLIB
+$(TARGET): $(OBJS)
+	$(CC) $(LIBSPATH) $(RPATH) -o $@ $^ $(LIBSLINKAGE)
+endif
+
+
+$(STATICLIB): $(OBJS)
+	ar rcs $@ $^
+
+$(DYNAMICLIB): $(OBJS)
+	$(CC) -shared -Wl,-soname,$(SONAME) -o $@ $^
+	ln -fs $@ $(SONAME)
+
+
+%.o: %.c
+	$(CC) $(CFLAGS) $(INCLUDESPATH) -c $< -o $@
+
+
+$(DEPENDDIR)/%.d: %.c
+	mkdir -p $(DEPENDDIR)
+	$(CC) $(INCLUDESPATH) -MM -MF $@ $<
+
+
+# DO NOT DELETE
+
+#SPECIFICS
+
+USBPARSER_PATH = ../../../usbtranslator/src
+USBPARSER := $(USBPARSER_PATH)/usbtranslator.py
+
+SPIRITPARSER_PATH = ../../../registertranslator/src
+SPIRITPARSER := $(SPIRITPARSER_PATH)/registertranslator.py
+
+IDLPARSER_PATH = ../../../idlgenerator/src
+IDLPARSER := $(IDLPARSER_PATH)/idlgenerator.py
+
+pwcblock.c: pwcRegs.xml
+	$(SPIRITPARSER) $<
+	cp $(SPIRITPARSER_PATH)/output/pwcblock.c ./
+	cp $(SPIRITPARSER_PATH)/output/pwcblock.h ./
+
+usbcom.c: pwcUsb.xml
+	$(USBPARSER) $<
+	cp $(USBPARSER_PATH)/output/usbcom.c ./
+	cp $(USBPARSER_PATH)/output/usbcom.h ./
+	
+_pwcmech.c: pwcmech.xml
+	$(IDLPARSER) $<
+	cp $(IDLPARSER_PATH)/output/pwcmech.c ./_pwcmech.c
+	cp $(IDLPARSER_PATH)/output/pwcmech.h ./
+	cp $(IDLPARSER_PATH)/idl/devcontract.h ./
+	
+#~SPECIFICS

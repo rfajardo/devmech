@@ -1,0 +1,82 @@
+VERSION			:=	trunk
+MODULENAME		:=	pwcmech
+CONFIG_PWCMECH	:=	m
+
+KVER  := $(shell uname -r)
+DEST  := /lib/modules/$(KVER)/kernel/kernel/drivers/misc/$(MODULENAME)
+
+EXTRA_CFLAGS=-DCONFIG_PWCMECH_DEBUG -DPWCMECH_DEBUG_LEVEL=2 #-DCONFIG_DEVCONTRACT_DEBUG
+
+EXTRA_SYMBOLS := ../../../usbif ../../../devif
+KBUILD_EXTRA_SYMBOLS := $(addprefix $(PWD)/, $(addsuffix /Module.symvers, $(EXTRA_SYMBOLS)))
+
+INCLUDE_FILES=pwcmech.h pwcmech_init.h pwcmech_if.h devcontract.h
+
+ifneq ($(KERNELRELEASE),)
+
+$(MODULENAME)-objs := init.o pwcblock.o _pwcmech.o pwcmech_if.o usbcom.o
+
+obj-$(CONFIG_PWCMECH) += pwcmech.o
+
+else
+
+KVER  := $(shell uname -r)
+KLINK := $(shell test -e /lib/modules/${KVER}/build/ && echo "build" || echo "source")
+KSRC  := /lib/modules/$(KVER)/$(KLINK)
+PWD   := $(shell pwd)
+DEST  := /lib/modules/$(KVER)/kernel/drivers/misc
+INCLUDE_DIR := $(KSRC)/include/$(MODULENAME)
+INCLUDE_DIRFILES := $(addprefix $(INCLUDE_DIR)/, $(INCLUDE_FILES))
+
+all: pwcblock.c usbcom.c _pwcmech.c
+	$(MAKE) -C $(KSRC) SUBDIRS=$(PWD) modules
+	
+clean:
+	rm -f usbcom.h usbcom.c pwcblock.h pwcblock.c pwcmech.h _pwcmech.c devcontract.h
+	$(MAKE) -C $(KSRC) SUBDIRS=$(PWD) clean
+
+install:
+	install -d $(INCLUDE_DIR)
+	install -t $(INCLUDE_DIR) $(INCLUDE_FILES)
+	install -d $(DEST)
+	install -m 644 -c $(MODULENAME).ko $(DEST)
+	-/sbin/depmod -a
+	echo "FINISHED"
+
+uninstall:
+	rm -f $(INCLUDE_DIRFILES)
+	rmdir $(INCLUDE_DIR)
+	rm -f $(DEST)/$(MODULENAME).ko	
+	-/sbin/depmod -a
+	echo "FINISHED"
+	
+#SPECIFICS
+
+USBPARSER_PATH = ../../../usbtranslator/src
+USBPARSER := $(USBPARSER_PATH)/usbtranslator.py
+
+SPIRITPARSER_PATH = ../../../registertranslator/src
+SPIRITPARSER := $(SPIRITPARSER_PATH)/registertranslator.py
+
+IDLPARSER_PATH = ../../../idlgenerator/src
+IDLPARSER := $(IDLPARSER_PATH)/idlgenerator.py
+
+pwcblock.c: pwcRegs.xml
+	$(SPIRITPARSER) $<
+	cp $(SPIRITPARSER_PATH)/output/pwcblock.c ./
+	cp $(SPIRITPARSER_PATH)/output/pwcblock.h ./
+
+usbcom.c: pwcUsb.xml
+	$(USBPARSER) $<
+	cp $(USBPARSER_PATH)/output/usbcom.c ./
+	cp $(USBPARSER_PATH)/output/usbcom.h ./
+	
+_pwcmech.c: pwcmech.xml
+	$(IDLPARSER) $<
+	cp $(IDLPARSER_PATH)/output/pwcmech.c ./_pwcmech.c
+	cp $(IDLPARSER_PATH)/output/pwcmech.h ./
+	cp $(IDLPARSER_PATH)/idl/devcontract.h ./
+	
+#~SPECIFICS
+	
+endif
