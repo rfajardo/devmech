@@ -1,0 +1,2496 @@
+------------------------------------------------------------------------
+r417 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-08-30 21:19:15 +0200 (Thu, 30 Aug 2012) | 1 line
+
+Adjusting preCondition mode="variable" to new standard. 
+------------------------------------------------------------------------
+r416 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-08-30 21:18:41 +0200 (Thu, 30 Aug 2012) | 5 lines
+
+Changing preCondition mode="variable". 
+
+Precondition should define what should be and not what should not be. 
+
+Adjusting generator to block in the case that the precondition is not fulfilled. 
+------------------------------------------------------------------------
+r415 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-08-30 21:17:12 +0200 (Thu, 30 Aug 2012) | 1 line
+
+Correcting code to avoid warning. 
+------------------------------------------------------------------------
+r414 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-08-08 12:50:47 +0200 (Wed, 08 Aug 2012) | 1 line
+
+-Philips webcam drivers working with device mechanism and driver policy version 0.5
+------------------------------------------------------------------------
+r413 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-08-08 12:49:24 +0200 (Wed, 08 Aug 2012) | 2 lines
+
+-New XML description of EFSM
+-EFSM works with mutexes of readers-writer-lock type
+------------------------------------------------------------------------
+r412 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-08-08 12:48:14 +0200 (Wed, 08 Aug 2012) | 1 line
+
+-Callbacks run in process context
+------------------------------------------------------------------------
+r411 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-08-08 12:43:34 +0200 (Wed, 08 Aug 2012) | 1 line
+
+Interrupt callback should be called with nr_of_packets equal 0 and not 1. Corrected. 
+------------------------------------------------------------------------
+r410 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-08-08 12:11:41 +0200 (Wed, 08 Aug 2012) | 1 line
+
+devcontract.h: User level mutex definitions had capitalized definitions but lower case usage. Corrected. 
+------------------------------------------------------------------------
+r409 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-08-08 12:00:36 +0200 (Wed, 08 Aug 2012) | 1 line
+
+USBIF: reducing warnings in user mode. 
+------------------------------------------------------------------------
+r408 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-08-08 11:55:00 +0200 (Wed, 08 Aug 2012) | 7 lines
+
+Removing unused functions that were required for the normal driver. 
+
+Adjusting callback function to callback function prototype. 
+
+Including return value to _pwc_mpt_set_angle(). 
+
+Defining data type for register sets/gets as unsigned int to accord with the generic definition. Ranges are checked by the interface. 
+------------------------------------------------------------------------
+r407 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-08-08 11:51:28 +0200 (Wed, 08 Aug 2012) | 3 lines
+
+Interfaces work with standard parameters. There is no point in restricting bit widths here. Furthermore, these generate warnings. 
+
+RegisterPhotoCallback() uses now the uniform function prototype for callbacks. 
+------------------------------------------------------------------------
+r406 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-08-08 11:49:56 +0200 (Wed, 08 Aug 2012) | 3 lines
+
+IDLGenerator: callback functions generated according to the new uniform function prototype for callbacks. 
+
+This avoids many warnings later on. 
+------------------------------------------------------------------------
+r405 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-08-08 11:49:00 +0200 (Wed, 08 Aug 2012) | 5 lines
+
+USBIF: Uniform function prototype for callbacks. 
+
+Interrupt function also has the parameters p_packet_len and nr_of_packets now. But they are fixed to NULL and 1 respectively. 
+
+This avoids many warnings later on. And consistent generation of callback parameters from the IDL. 
+------------------------------------------------------------------------
+r404 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-08-07 18:49:27 +0200 (Tue, 07 Aug 2012) | 3 lines
+
+Pwcmech.xml: listing internalResource usbcom.h for buffer level comparison. 
+
+Makefile.kernel: devcontract.h has to be copied to the kernel directory. Included in the INCLUDE_FILES. 
+------------------------------------------------------------------------
+r403 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-08-07 18:48:10 +0200 (Tue, 07 Aug 2012) | 7 lines
+
+Pwcmech requires an internal resource for the comparison of a state machine variable. 
+
+This resource is listed in the XML under an internalResource tag. The listed header file is only included in the source file. 
+
+Idlgen: ordering of state machine generation rolled back. The generated state machine looked better in the source file but worse in the header file. 
+
+Cidlgenerator: generates a list of multiple resource files. Resource tags are listed in the header, internalResource tags are listed in the source file. 
+------------------------------------------------------------------------
+r402 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-08-07 18:23:46 +0200 (Tue, 07 Aug 2012) | 5 lines
+
+New XML description of the device mechanism contract. 
+
+Makefiles copy/delete devcontract.h. 
+
+Debug can be enabled by defining CONFIG_DEVCONTRACT_DEBUG instead of CONFIG_DEVMECH_DEBUG. Makefiles updated. 
+------------------------------------------------------------------------
+r401 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-08-07 18:18:26 +0200 (Tue, 07 Aug 2012) | 1 line
+
+Variable precondition of pwcmech.xml corrected to existing. Pwcmech is not a variable to which the state machine value can be compared to, devmech is. 
+------------------------------------------------------------------------
+r400 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-08-07 18:05:30 +0200 (Tue, 07 Aug 2012) | 4 lines
+
+Enabling some pseudoC kind of XML input. Current translation is:
+	-and	->		&&
+	-lt		->		<
+	-le		->		<=
+------------------------------------------------------------------------
+r399 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-08-07 17:31:21 +0200 (Tue, 07 Aug 2012) | 5 lines
+
+Up_lock() necessary if precondition fails. Gen_precondition() does that.  
+
+Variable dependent precondition included.
+
+Timing postcondition included. 
+------------------------------------------------------------------------
+r398 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-08-07 17:17:00 +0200 (Tue, 07 Aug 2012) | 1 line
+
+IDLGenerator: readers-writer-lock declaration, initialization, usage and termination. 
+------------------------------------------------------------------------
+r397 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-08-07 16:01:41 +0200 (Tue, 07 Aug 2012) | 1 line
+
+Avoid overwrite of the variable "operation" in InterfaceHeaderGenerator. 
+------------------------------------------------------------------------
+r396 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-08-07 15:55:36 +0200 (Tue, 07 Aug 2012) | 1 line
+
+IDLGenerator: working with new XML file. 
+------------------------------------------------------------------------
+r395 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-08-06 16:29:39 +0200 (Mon, 06 Aug 2012) | 4 lines
+
+First changes to idlgenerator to accord with device contract definitions. 
+	
+	-updating XML description
+	-including underlying framework as header file
+------------------------------------------------------------------------
+r394 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-08-06 14:04:20 +0200 (Mon, 06 Aug 2012) | 1 line
+
+USBIF: do not allow register transfers whose length is longer than endpoint 0 buffer. 
+------------------------------------------------------------------------
+r393 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-08-05 11:02:05 +0200 (Sun, 05 Aug 2012) | 5 lines
+
+Adjusting locking system. 
+	-trigger_endpoint_transfers() and cancel_endpoint_transfers() cannot be executed in parallel with:
+		-transfer_complete(), add_transfer(), transfer_pending() and remove_transfer()
+		
+Locks updated accordingly. 
+------------------------------------------------------------------------
+r392 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-08-03 16:28:11 +0200 (Fri, 03 Aug 2012) | 1 line
+
+Dropping support for Linux-2.6.28 in trunk. 
+------------------------------------------------------------------------
+r391 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-08-03 16:11:43 +0200 (Fri, 03 Aug 2012) | 1 line
+
+Reducing amount of workqueues/device. Earlier we had one workqueue/endpoint, now we have one workqueue/device. 
+------------------------------------------------------------------------
+r390 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-08-03 15:54:42 +0200 (Fri, 03 Aug 2012) | 1 line
+
+PWC-3.1.1: working with current usbif. 
+------------------------------------------------------------------------
+r389 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-08-03 15:54:16 +0200 (Fri, 03 Aug 2012) | 1 line
+
+USBIF: Working in Kernel. 
+------------------------------------------------------------------------
+r388 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-08-03 15:30:08 +0200 (Fri, 03 Aug 2012) | 4 lines
+
+Callback function now returns enum cb_ret. We always return REACTIVATE to resubmit the buffer to transfer after we already used the data. 
+
+
+pwc_user.c: if threads and transfers are initialized, threads have to keep running until the transfers are all complete and removed. Code has been updated accordingly. 
+------------------------------------------------------------------------
+r387 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-08-03 15:27:55 +0200 (Fri, 03 Aug 2012) | 3 lines
+
+Callback functions are now of return type enum cb_ret. 
+
+Generated header file has to include <usbif/streamif.h> for enum cb_ret definition. 
+------------------------------------------------------------------------
+r386 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-08-03 15:26:46 +0200 (Fri, 03 Aug 2012) | 3 lines
+
+Makefile.user: -D is not required for DEBUGPARAM
+
+registerVideoCallback() and registerPhotoCallback() get now a function pointer which returns type enum cb_ret.
+------------------------------------------------------------------------
+r385 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-08-03 15:25:12 +0200 (Fri, 03 Aug 2012) | 13 lines
+
+Three issues:
+1) Correct interrupt reactivation. 
+	-intstream/isostream: the callback can return REACTIVATE or FINISH. If it returns FINISH, the transfer is marked complete. Otherwise, it is resubmitted. 
+	-unlock_dma_spaces() and unlock_interrupt() only resubmit completed transfers. Pending transfers are ignored. 
+	
+2) Memory leaks on transfer removal.
+	-intstream/isostream: sometimes the return value of the transfer status is not specifically USB_TRANSFER_CANCELED and also not USB_SUCCESS. If this is the case, the transfer is removed at the end of the top half handler if no user callback is available. 
+	-if user callback is available in the bottom half handler, isochronous transfer is processsed nevertheless and interrupt transfers are resubmitted. 
+	-If the callback has been released in the middle of the bottom half handler, the transfer is marked as completed. 
+	
+3) NULL pointer dereference.
+	-intstream/isostream: unregister_dma_spaces()/unregister_interrupt_buffers() removed threads before endpoint transfers were all completed. But endpoint transfers access thread data. 
+	-Functions now stop callbacks first, then flush all pending threads, then remove all transfers and finally remove threads. 
+------------------------------------------------------------------------
+r384 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-08-02 18:29:34 +0200 (Thu, 02 Aug 2012) | 1 line
+
+In case no callback is assigned, the bottom half handler does not run and transfer_complete() is called directly on the top half handler. 
+------------------------------------------------------------------------
+r383 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-08-02 18:25:49 +0200 (Thu, 02 Aug 2012) | 5 lines
+
+We cannot move a transfer to complete before having used the data from its buffers. 
+
+Otherwise the data would be overwritten before we did use it. 
+
+Therefore, intstream.c and isostream.c only assign transfer completion after the data has been used by the driver. After the bottom half handler has run. 
+------------------------------------------------------------------------
+r382 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-08-02 17:35:26 +0200 (Thu, 02 Aug 2012) | 3 lines
+
+USB callback runs now in process context. We can safely sleep here and use mutex instead of spinlock. 
+
+Queued_bufs_lock is now a mutex instead of spinlock_t. 
+------------------------------------------------------------------------
+r381 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-08-02 17:34:32 +0200 (Thu, 02 Aug 2012) | 1 line
+
+Locks.h: Using mutex instead of semaphore initialized to 1. 
+------------------------------------------------------------------------
+r380 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-08-02 17:15:42 +0200 (Thu, 02 Aug 2012) | 3 lines
+
+Unregister_interrupt_buffer() should be called unregister_interrupt_buffers(). 
+
+Pwcmech now calls correctly. 
+------------------------------------------------------------------------
+r379 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-08-02 17:14:04 +0200 (Thu, 02 Aug 2012) | 1 line
+
+Interface pointer also has to be freed. 
+------------------------------------------------------------------------
+r378 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-08-02 17:13:52 +0200 (Thu, 02 Aug 2012) | 1 line
+
+Interface pointer also has to be freed. 
+------------------------------------------------------------------------
+r377 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-08-02 17:12:42 +0200 (Thu, 02 Aug 2012) | 3 lines
+
+USB Interface also works in user space now. The thread interface is transformed into an interface which does nothing and upper layers simply keep using it seamlessly. 
+
+Small memory leaks solved. 
+------------------------------------------------------------------------
+r376 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-08-02 15:11:37 +0200 (Thu, 02 Aug 2012) | 1 line
+
+Including locks to USB interface. 
+------------------------------------------------------------------------
+r375 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-08-02 14:15:09 +0200 (Thu, 02 Aug 2012) | 1 line
+
+No need to use GPF_ATOMIC since submit_transfer() is not called from interrupt context anymore. 
+------------------------------------------------------------------------
+r374 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-08-02 14:00:27 +0200 (Thu, 02 Aug 2012) | 1 line
+
+Intstream.c updated to completely accord with new workqueue working system. 
+------------------------------------------------------------------------
+r373 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-08-02 13:56:45 +0200 (Thu, 02 Aug 2012) | 1 line
+
+USB interface working with workqueues. 
+------------------------------------------------------------------------
+r372 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-08-02 13:00:30 +0200 (Thu, 02 Aug 2012) | 1 line
+
+transfer.c wraps most USB calls. A fault was inside of it that occurred on translation. Solved!
+------------------------------------------------------------------------
+r371 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-07-31 19:01:51 +0200 (Tue, 31 Jul 2012) | 1 line
+
+Making it compile. We only have to see if it works now. Compiling without warnings. 
+------------------------------------------------------------------------
+r370 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-07-31 17:40:21 +0200 (Tue, 31 Jul 2012) | 1 line
+
+Finishing up adaptation to new endpoint and process interfaces. 
+------------------------------------------------------------------------
+r369 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-07-31 16:56:00 +0200 (Tue, 31 Jul 2012) | 1 line
+
+Adjusting everything for consistency. 
+------------------------------------------------------------------------
+r368 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-07-31 15:16:09 +0200 (Tue, 31 Jul 2012) | 3 lines
+
+First attempt to adapt stream interfaces to use:
+	-thread & process
+	-transfer & endpoint
+------------------------------------------------------------------------
+r367 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-07-31 13:21:58 +0200 (Tue, 31 Jul 2012) | 1 line
+
+Error handling correction for transfer_setup() and adaptation to comif.c.
+------------------------------------------------------------------------
+r366 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-07-31 13:02:05 +0200 (Tue, 31 Jul 2012) | 1 line
+
+Continue to separate USB interface errors from USB subsystem and libusb errors. 
+------------------------------------------------------------------------
+r365 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-07-31 12:48:00 +0200 (Tue, 31 Jul 2012) | 1 line
+
+Start to separate USB interface errors from USB subsystem and libusb errors. 
+------------------------------------------------------------------------
+r364 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-07-31 12:31:07 +0200 (Tue, 31 Jul 2012) | 1 line
+
+Finishing endpoint interface with endpoint_transfer_bulk(). 
+------------------------------------------------------------------------
+r363 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-07-31 12:00:05 +0200 (Tue, 31 Jul 2012) | 1 line
+
+Adding bulk_transfer to transfer interface. 
+------------------------------------------------------------------------
+r362 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-07-21 17:11:12 +0200 (Sat, 21 Jul 2012) | 5 lines
+
+Starting four new abstractions:
+	-endpoint->transfer
+	-process->thread
+
+They should be used on int and isostream to create transfers and laungh a thread on data receipt. 
+------------------------------------------------------------------------
+r361 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-07-06 15:34:24 +0200 (Fri, 06 Jul 2012) | 1 line
+
+Solving a kernel panic. For some reason, pwc_get_next_fill_buf() may return a NULL pointer. The Cheese application made this happen quite often. We avoid it now and output an error when it happens. 
+------------------------------------------------------------------------
+r360 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-30 18:44:44 +0200 (Fri, 30 Mar 2012) | 1 line
+
+Release-0.4: working with idlgenerator from driver policy and new device mechanism able to allocate/initialize device mechanism structures dynamically.
+------------------------------------------------------------------------
+r359 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-30 18:43:10 +0200 (Fri, 30 Mar 2012) | 1 line
+
+Initial release->0.4: it works with device mechanism and pwc release-0.4.
+------------------------------------------------------------------------
+r358 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-30 18:43:04 +0200 (Fri, 30 Mar 2012) | 1 line
+
+
+------------------------------------------------------------------------
+r357 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-30 18:40:12 +0200 (Fri, 30 Mar 2012) | 1 line
+
+Release 0.4: devif/usbif with generators enabling dynamic allocation/initialization of device mechanism structure.
+------------------------------------------------------------------------
+r356 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-30 18:05:59 +0200 (Fri, 30 Mar 2012) | 5 lines
+
+Working well with Ekiga and xawtv. 
+
+Cheese segfaults with regular driver and panics with this. I still don't know exactly why but seems to be gstreamer related. 
+
+
+------------------------------------------------------------------------
+r355 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-30 16:16:33 +0200 (Fri, 30 Mar 2012) | 1 line
+
+Pwc-3.1.0 driver seems to be working with current devif/usbif/pwcmech. Everything compiles, driver loads and unloads without a problem. Functional test still missing. 
+------------------------------------------------------------------------
+r354 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-30 15:31:24 +0200 (Fri, 30 Mar 2012) | 1 line
+
+Initial updates to work with dynamically allocated pwcmech. 
+------------------------------------------------------------------------
+r353 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-30 13:31:04 +0200 (Fri, 30 Mar 2012) | 5 lines
+
+Workaround for state machine on pwc_isoc_init() is not necessary anymore. 
+
+Pwcmech has to be allocated prior to video_register_device() because the latter automatically calls video_open(). 
+
+Because video_open() is automatically called, pwc_set_leds() and pwc_camera_power() are redundant at the end of probe(). 
+------------------------------------------------------------------------
+r352 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-30 13:28:17 +0200 (Fri, 30 Mar 2012) | 1 line
+
+Including a commented option of -DCONFIG_DEVMECH_DEBUG to the Makefiles to enable state machine debug information. 
+------------------------------------------------------------------------
+r351 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-30 13:26:28 +0200 (Fri, 30 Mar 2012) | 1 line
+
+Enforcing timeout of 1000 for usb_get_configuration. Otherwise usb_get_configuration fails. 
+------------------------------------------------------------------------
+r350 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-30 12:44:57 +0200 (Fri, 30 Mar 2012) | 1 line
+
+Generating switchable debug information. 
+------------------------------------------------------------------------
+r349 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-30 11:15:08 +0200 (Fri, 30 Mar 2012) | 1 line
+
+Pwcmech_deregister_driver only needs one devmech structure as parameter. Now, it is the work of driver policy to register itself to control the driver initialization. 
+------------------------------------------------------------------------
+r348 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-30 10:59:26 +0200 (Fri, 30 Mar 2012) | 1 line
+
+usb_init and usb_exit should not register the driver. Driver policy has to do that. 
+------------------------------------------------------------------------
+r347 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-29 17:17:15 +0200 (Thu, 29 Mar 2012) | 1 line
+
+Makefile update. 
+------------------------------------------------------------------------
+r346 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-29 15:35:42 +0200 (Thu, 29 Mar 2012) | 3 lines
+
+Solving kernel panic. 
+
+Workaround for making driver behaves as state machine expects. Have to find out why it does not instead of applying the workaround. 
+------------------------------------------------------------------------
+r345 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-29 15:08:32 +0200 (Thu, 29 Mar 2012) | 1 line
+
+Makefile generates usbcom.c not usbco.c. 
+------------------------------------------------------------------------
+r344 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-29 13:34:43 +0200 (Thu, 29 Mar 2012) | 1 line
+
+Transitions have to check if they are in their 'from' state before changing state. 
+------------------------------------------------------------------------
+r343 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-29 12:42:15 +0200 (Thu, 29 Mar 2012) | 1 line
+
+Adjusting pwcmech.xml to use value type instead of C inherited. 
+------------------------------------------------------------------------
+r342 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-29 12:41:26 +0200 (Thu, 29 Mar 2012) | 3 lines
+
+Adjusting standard register/field value to unsigned int instead of uint8_t because it is more generic. 
+
+Adjusting pwcmech.xml to use value type instead of C inherited. 
+------------------------------------------------------------------------
+r341 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-28 17:57:05 +0200 (Wed, 28 Mar 2012) | 1 line
+
+Updating state machine on example XML file. 
+------------------------------------------------------------------------
+r340 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-28 17:56:39 +0200 (Wed, 28 Mar 2012) | 1 line
+
+Updating XML file for IDL description. It is now working well with pwc_user using its created state machine. 
+------------------------------------------------------------------------
+r339 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-28 17:50:59 +0200 (Wed, 28 Mar 2012) | 3 lines
+
+Idlgenerator working now for:
+	variable bound to function argument
+ 	generation of multiple transitions for a single function
+------------------------------------------------------------------------
+r338 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-28 17:02:37 +0200 (Wed, 28 Mar 2012) | 3 lines
+
+Pwc_user working with new pwcmech. 
+
+TODO: Idlgenerator failed on correct state machine generation. 
+------------------------------------------------------------------------
+r337 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-28 16:42:47 +0200 (Wed, 28 Mar 2012) | 1 line
+
+Postconditions are only checked if the internal function succeeded. Success means that the return value is 0 and not something but 0. Corrected!
+------------------------------------------------------------------------
+r336 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-28 16:04:56 +0200 (Wed, 28 Mar 2012) | 5 lines
+
+CMakeLists.txt: DEVIF preprocessor macro definition has to be defined differently than simply:
+set (DEVIF 1)
+
+Our current approach has been:
+set_target_properties(devif PROPERTIES COMPILE_DEFINITIONS DEVIF)
+------------------------------------------------------------------------
+r335 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-28 16:02:26 +0200 (Wed, 28 Mar 2012) | 1 line
+
+Makefile adjustment for userspace compilation. 
+------------------------------------------------------------------------
+r334 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-28 15:59:35 +0200 (Wed, 28 Mar 2012) | 1 line
+
+Wrong pointer type detected by compiler. 
+------------------------------------------------------------------------
+r333 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-28 15:21:01 +0200 (Wed, 28 Mar 2012) | 1 line
+
+It is bad to use devif and usbif errors as return types for the device mechanism interface. Better to use our own error type. This way we don't have to include usbif and devif headers in the driver. 
+------------------------------------------------------------------------
+r332 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-28 15:20:10 +0200 (Wed, 28 Mar 2012) | 1 line
+
+It is bad to use devif and usbif errors as return types for the device mechanism interface. Better to use our own error type. This way we don't have to include usbif and devif headers in the driver. 
+------------------------------------------------------------------------
+r331 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-28 15:18:24 +0200 (Wed, 28 Mar 2012) | 1 line
+
+PWC driver updated to work with generated structures. 
+------------------------------------------------------------------------
+r330 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-28 14:15:05 +0200 (Wed, 28 Mar 2012) | 1 line
+
+Finalizing pwcmech. Pwcmechwrap moved to driver policy, in our case pwc. 
+------------------------------------------------------------------------
+r329 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-28 13:28:47 +0200 (Wed, 28 Mar 2012) | 1 line
+
+Generating start and stop functions like for the communication and device interfaces. 
+------------------------------------------------------------------------
+r328 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-28 12:30:45 +0200 (Wed, 28 Mar 2012) | 1 line
+
+pwcmech: compatible with idlgenerator! Compiling. 
+------------------------------------------------------------------------
+r327 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-28 12:26:09 +0200 (Wed, 28 Mar 2012) | 1 line
+
+idlgenerator: compatible with pwcmech. Pwcmech compiles!
+------------------------------------------------------------------------
+r326 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-27 21:08:50 +0200 (Tue, 27 Mar 2012) | 1 line
+
+pwcmech: updating to use the new structure generators instead of the old global variables. 
+------------------------------------------------------------------------
+r325 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-27 21:02:26 +0200 (Tue, 27 Mar 2012) | 12 lines
+
+Avoiding that usbif users get warnings for different pointers. 
+
+#ifdef USBIF
+struct usbcom
+{
+	UsbDevice * handle;
+};
+typedef struct usbcom UsbCom;
+#else
+typedef void UsbCom;
+#endif
+
+------------------------------------------------------------------------
+r324 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-27 20:09:04 +0200 (Tue, 27 Mar 2012) | 7 lines
+
+Being nice to framework friends. If USBIF, Device is also defined:
+//device definition
+#if defined(DEVIF) || defined(USBIF)
+typedef struct dev Device;
+#else
+typedef void Device;
+#endif
+------------------------------------------------------------------------
+r323 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-27 19:57:37 +0200 (Tue, 27 Mar 2012) | 9 lines
+
+Avoiding that devif users get warnings for different pointers. 
+
+regtypes.h:
+//device definition
+#ifdef DEVIF
+typedef struct dev Device;
+#else
+typedef void Device;
+#endif
+------------------------------------------------------------------------
+r322 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-27 19:15:44 +0200 (Tue, 27 Mar 2012) | 1 line
+
+Correcting errors found by compiler. 
+------------------------------------------------------------------------
+r321 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-27 18:03:35 +0200 (Tue, 27 Mar 2012) | 1 line
+
+Header files don't need the transition functions to be declared. Removing generator. 
+------------------------------------------------------------------------
+r320 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-27 17:58:40 +0200 (Tue, 27 Mar 2012) | 8 lines
+
+Generating structure as interface data. This way, many devices can be supported by simply generating more data. Earlier these structures were simply global variables. 
+
+struct usbcom
+{
+	UsbDevice * handle;
+};
+
+The real external structure has more data. But since handle is always in the first place, the data should be gathered correctly for internal usage. 
+------------------------------------------------------------------------
+r319 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-27 17:57:38 +0200 (Tue, 27 Mar 2012) | 8 lines
+
+Generating structure as interface data. This way, many devices can be supported by simply generating more data. Earlier these structures were simply global variables. 
+
+struct pwcblock
+{
+	struct dev * handle;
+};
+
+The real external structure has more data. But since handle is always in the first place, the data should be gathered correctly for internal usage. 
+------------------------------------------------------------------------
+r318 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-27 17:54:57 +0200 (Tue, 27 Mar 2012) | 8 lines
+
+Attempting to work with external generated structure as interface data. 
+
+struct usbcom
+{
+	UsbDevice * handle;
+};
+
+The real external structure has more data. But since handle is always in the first place, the data should be gathered correctly for internal usage. 
+------------------------------------------------------------------------
+r317 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-27 17:53:40 +0200 (Tue, 27 Mar 2012) | 9 lines
+
+Attempting to work with external generated structure as interface data. 
+
+struct dev
+{
+	DevCom * handle;		//on generated device structures, DevCom * handle has
+							//to take the first position in the structure
+};
+
+The real external structure has more data. But since handle is always in the first place, the data should be gathered correctly for internal usage. 
+------------------------------------------------------------------------
+r316 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-23 17:47:30 +0100 (Fri, 23 Mar 2012) | 5 lines
+
+Initial commit of idlgenerator. 
+
+This code generator generates an interface and attaches a state machine control to it. 
+
+The interface and the state machine are described in an XML file. 
+------------------------------------------------------------------------
+r315 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-23 17:45:03 +0100 (Fri, 23 Mar 2012) | 1 line
+
+Initial import.
+------------------------------------------------------------------------
+r314 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-23 17:43:54 +0100 (Fri, 23 Mar 2012) | 1 line
+
+
+------------------------------------------------------------------------
+r313 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-08 12:29:54 +0100 (Thu, 08 Mar 2012) | 1 line
+
+Updating pwcmech to work with idlgenerator. Compiling correctly. 
+------------------------------------------------------------------------
+r312 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-07 16:31:43 +0100 (Wed, 07 Mar 2012) | 1 line
+
+Preparing pwcmech for coping with idlparser. 
+------------------------------------------------------------------------
+r311 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-03-05 10:54:07 +0100 (Mon, 05 Mar 2012) | 1 line
+
+usbparser examples: updating idProduct of pwcUsb.xml to avoid different files under the same version. 
+------------------------------------------------------------------------
+r310 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-01-17 13:10:16 +0100 (Tue, 17 Jan 2012) | 1 line
+
+PWC driver based on pwcmech working on all enclosed platforms. Working together with device mechanism release-0.3.
+------------------------------------------------------------------------
+r309 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-01-17 12:50:50 +0100 (Tue, 17 Jan 2012) | 1 line
+
+Fully working pwcmech based pwc on Linux kernel 3.1.9. 
+------------------------------------------------------------------------
+r308 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-01-17 11:27:45 +0100 (Tue, 17 Jan 2012) | 1 line
+
+Initializing more variables on pwc_isoc_init() and using device structure variable vlast_packet_size instead of static variable on acquire_frame(). 
+------------------------------------------------------------------------
+r307 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-01-09 16:35:14 +0100 (Mon, 09 Jan 2012) | 1 line
+
+Device mechanism working equally well on kernel and usermode.
+------------------------------------------------------------------------
+r306 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-01-09 16:15:24 +0100 (Mon, 09 Jan 2012) | 1 line
+
+pwc_user working with current pwcmech. 
+------------------------------------------------------------------------
+r305 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-01-09 15:57:38 +0100 (Mon, 09 Jan 2012) | 3 lines
+
+Adjusting idProduct to Logitech Zoom Cameras. 
+
+Moving pwcmech_start variable out of defines (__KERNEL__ or userspace).
+------------------------------------------------------------------------
+r304 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-01-09 15:54:31 +0100 (Mon, 09 Jan 2012) | 1 line
+
+Including context pointer to callback registration functions. Pwcmech fully working. 
+------------------------------------------------------------------------
+r303 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-01-09 15:41:33 +0100 (Mon, 09 Jan 2012) | 1 line
+
+Currently fully working pwc driver based on pwc device mechanism. 
+------------------------------------------------------------------------
+r302 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-01-09 15:39:17 +0100 (Mon, 09 Jan 2012) | 4 lines
+
+Using add_transfer instead of direct pushBack. 
+
+TODO:
+All functions altering the pending/complete transfer lists have to use some type of semaphore. 
+------------------------------------------------------------------------
+r301 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-01-09 15:01:55 +0100 (Mon, 09 Jan 2012) | 9 lines
+
+Updating interrupt registration to include a context pointer. 
+
+Splitting endpoint transfers in pending and complete transfers. Still unsure if this is necessary. 
+
+Passing transfer to complete list at beginning of callback. Using complete and pending list differently on trigger_endpoint_transfers() and cancel_endpoint_transfers().
+
+Somehow, cancel_endpoint_transfers() should wait for all complete_transfers to be removed. They are removed inside of the interrupt handler. 
+
+
+------------------------------------------------------------------------
+r300 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-01-04 13:03:09 +0100 (Wed, 04 Jan 2012) | 1 line
+
+Using a pwcmech_start variable to keep track of device structures allocation. If the variable is true, the device structures have been allocated. Otherwise they are freed. By checking the variable on pwc_devmech_start() and pwc_devmech_stop(), we avoid memory leaks. 
+------------------------------------------------------------------------
+r299 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-01-04 12:59:01 +0100 (Wed, 04 Jan 2012) | 1 line
+
+
+------------------------------------------------------------------------
+r298 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-01-04 12:56:14 +0100 (Wed, 04 Jan 2012) | 1 line
+
+Using pwc_devmech_start() and pwc_devmech_stop() functions to clean device structure caches when device is disconnected. 
+------------------------------------------------------------------------
+r297 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2012-01-04 12:49:57 +0100 (Wed, 04 Jan 2012) | 7 lines
+
+Separating device structure from communication initialization. 
+
+When module loads, communication is initialized through pwc_devmech_init(). The memory required by the communication structures is allocated and they are populated/associated. These are only freed when the module is removed. 
+
+This can be risky if driver expects usbif to be automatically reset to default. That means, defaults for alternate interface and configuration on power-up. On the other hand, pwcmech warns if we try to use a wrong configuration or alternate interface. 
+
+With pwc_devmech_start(), the device structure (registers) is allocated, populated and associated. This ensures that the cache is thrown away when the device is disconnected. We could also create a devif function to set memory cache to invalid instead. 
+------------------------------------------------------------------------
+r296 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-12-15 20:10:10 +0100 (Thu, 15 Dec 2011) | 9 lines
+
+BUG solved: Kernel version of transfer_setup was using udev->ctrl0_buf for sending/receiving data over setup packets. It should use the input argument buf instead. 
+
+That did not provoke more problems because transfer_setup is regularly called with udev->ctrl0_buf. 
+
+But Philips cameras were not working because send_video_command require sending a special buffer and transfer_setup was sending something else instead. 
+
+Parameter SIMULATE split into:
+SIMULATE: do not really send setup packets or data
+SHOWTRANSFERS: show setup packets and data which will be sent
+------------------------------------------------------------------------
+r295 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-12-15 20:05:16 +0100 (Thu, 15 Dec 2011) | 1 line
+
+No inline functions going out of a module. Regular function instead. 
+------------------------------------------------------------------------
+r294 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-12-13 18:09:53 +0100 (Tue, 13 Dec 2011) | 4 lines
+
+pwc.h: not declaring the pwcmech functions here anymore. 
+
+pwc-if.c: including pwcmechwrap.h header
+pwc-v4l.c: including pwcmechwrap.h header
+------------------------------------------------------------------------
+r293 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-12-13 18:08:39 +0100 (Tue, 13 Dec 2011) | 3 lines
+
+Big Bug: getDynamicNoise was being sent to the device instead of retrieved from it. 
+
+contourMode: 0xFF automatic and 0 fixed now. It was wrong before, the other way around. 
+------------------------------------------------------------------------
+r292 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-12-13 18:06:48 +0100 (Tue, 13 Dec 2011) | 1 line
+
+Debug mode added to simulate the setup packet transfers instead of actually transferring anything. The setup packets and data are output as printk KERN_INFO instead. 
+------------------------------------------------------------------------
+r291 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-12-13 18:04:17 +0100 (Tue, 13 Dec 2011) | 3 lines
+
+contourMode is automatic on 0xFF and manual on 0, updated. 
+
+Also including pan and tilt registers. 
+------------------------------------------------------------------------
+r290 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-12-13 18:03:24 +0100 (Tue, 13 Dec 2011) | 1 line
+
+Big Bug: getDynamicNoise was being sent to the device instead of retrieved from it. 
+------------------------------------------------------------------------
+r289 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-17 12:20:47 +0100 (Thu, 17 Nov 2011) | 1 line
+
+Adapting Makefile to include symbols for pwcmech from the new directory: kernel_pwcmech instead of pwc_device_mechanism. 
+------------------------------------------------------------------------
+r288 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-17 12:06:33 +0100 (Thu, 17 Nov 2011) | 3 lines
+
+Including pwc driver for Linux kernel 3.1.0. 
+
+This driver has been adapted to work with our device mechanism strategy and the pwcmech device mechanism for philips webcam. 
+------------------------------------------------------------------------
+r287 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-17 12:05:02 +0100 (Thu, 17 Nov 2011) | 1 line
+
+Initial import.
+------------------------------------------------------------------------
+r286 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-17 12:02:39 +0100 (Thu, 17 Nov 2011) | 1 line
+
+Including getMotorStatus() function to acquire the status of the pan&tilt motor. 
+------------------------------------------------------------------------
+r285 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-17 11:58:56 +0100 (Thu, 17 Nov 2011) | 1 line
+
+
+------------------------------------------------------------------------
+r284 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-17 11:58:50 +0100 (Thu, 17 Nov 2011) | 1 line
+
+
+------------------------------------------------------------------------
+r283 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-17 11:57:17 +0100 (Thu, 17 Nov 2011) | 1 line
+
+
+------------------------------------------------------------------------
+r282 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-17 11:56:57 +0100 (Thu, 17 Nov 2011) | 1 line
+
+
+------------------------------------------------------------------------
+r281 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-17 11:56:37 +0100 (Thu, 17 Nov 2011) | 1 line
+
+
+------------------------------------------------------------------------
+r280 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-17 11:55:56 +0100 (Thu, 17 Nov 2011) | 1 line
+
+
+------------------------------------------------------------------------
+r279 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-17 11:55:50 +0100 (Thu, 17 Nov 2011) | 1 line
+
+
+------------------------------------------------------------------------
+r278 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-17 11:54:53 +0100 (Thu, 17 Nov 2011) | 1 line
+
+
+------------------------------------------------------------------------
+r277 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-17 11:54:21 +0100 (Thu, 17 Nov 2011) | 1 line
+
+
+------------------------------------------------------------------------
+r276 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-17 11:53:58 +0100 (Thu, 17 Nov 2011) | 1 line
+
+
+------------------------------------------------------------------------
+r275 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-17 11:53:32 +0100 (Thu, 17 Nov 2011) | 1 line
+
+
+------------------------------------------------------------------------
+r274 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-17 11:53:16 +0100 (Thu, 17 Nov 2011) | 1 line
+
+
+------------------------------------------------------------------------
+r273 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-17 11:52:53 +0100 (Thu, 17 Nov 2011) | 1 line
+
+
+------------------------------------------------------------------------
+r272 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-17 11:51:39 +0100 (Thu, 17 Nov 2011) | 1 line
+
+
+------------------------------------------------------------------------
+r271 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-17 11:50:48 +0100 (Thu, 17 Nov 2011) | 1 line
+
+
+------------------------------------------------------------------------
+r270 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-17 11:50:40 +0100 (Thu, 17 Nov 2011) | 1 line
+
+
+------------------------------------------------------------------------
+r269 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-17 11:49:46 +0100 (Thu, 17 Nov 2011) | 1 line
+
+
+------------------------------------------------------------------------
+r268 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-17 11:49:25 +0100 (Thu, 17 Nov 2011) | 1 line
+
+
+------------------------------------------------------------------------
+r267 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-17 11:49:08 +0100 (Thu, 17 Nov 2011) | 1 line
+
+
+------------------------------------------------------------------------
+r266 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-17 11:48:46 +0100 (Thu, 17 Nov 2011) | 1 line
+
+
+------------------------------------------------------------------------
+r265 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-17 11:48:12 +0100 (Thu, 17 Nov 2011) | 1 line
+
+
+------------------------------------------------------------------------
+r264 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-17 11:47:53 +0100 (Thu, 17 Nov 2011) | 1 line
+
+
+------------------------------------------------------------------------
+r263 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-17 11:47:27 +0100 (Thu, 17 Nov 2011) | 1 line
+
+
+------------------------------------------------------------------------
+r262 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-17 11:47:00 +0100 (Thu, 17 Nov 2011) | 1 line
+
+
+------------------------------------------------------------------------
+r261 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-17 11:46:42 +0100 (Thu, 17 Nov 2011) | 1 line
+
+
+------------------------------------------------------------------------
+r260 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-17 11:46:30 +0100 (Thu, 17 Nov 2011) | 1 line
+
+
+------------------------------------------------------------------------
+r259 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-17 11:46:20 +0100 (Thu, 17 Nov 2011) | 1 line
+
+
+------------------------------------------------------------------------
+r258 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-16 17:12:21 +0100 (Wed, 16 Nov 2011) | 7 lines
+
+Adding motor control to pwcmech. 
+
+pwcUsb.xml includes internal packages to control that. 
+
+pwcRegs.xml includes two new registers to set or reset the motor. 
+
+pwcmech.h & pwcmech_if.c setMotor and resetMotor functions. 
+------------------------------------------------------------------------
+r257 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-16 14:52:40 +0100 (Wed, 16 Nov 2011) | 1 line
+
+Updating old references to pwc_device_mechanism to pwcmech. 
+------------------------------------------------------------------------
+r256 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-16 14:50:03 +0100 (Wed, 16 Nov 2011) | 1 line
+
+Setting standard debug trace level to 0 for usermode on cmake. 
+------------------------------------------------------------------------
+r255 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-15 17:25:30 +0100 (Tue, 15 Nov 2011) | 1 line
+
+Makefile is to be selected between Makefile.user and Makefile.kernel. It should not exist on its own. 
+------------------------------------------------------------------------
+r254 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-15 17:13:15 +0100 (Tue, 15 Nov 2011) | 3 lines
+
+Makefile: correctly defining the debug macro for inclusion of debug code. 
+
+pwc-if.c: setting ctrl0 timeout to 1ms. Otherwise setVideoMode fails. 
+------------------------------------------------------------------------
+r253 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-15 17:11:12 +0100 (Tue, 15 Nov 2011) | 3 lines
+
+1) Creating debug messages for pwcmech. 
+2) When registers are read, the active reg files are not correctly set. They have to be set when reading too. That is the case for volatile registers and for the first time a non-volatile mode register is read. 
+3) Making the debug level a parameter called trace for kernel. 
+------------------------------------------------------------------------
+r252 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-15 17:07:51 +0100 (Tue, 15 Nov 2011) | 1 line
+
+Disabling debug messages for standard checkout. 
+------------------------------------------------------------------------
+r251 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-15 17:04:12 +0100 (Tue, 15 Nov 2011) | 3 lines
+
+RegisterGenerator was describing the enumerated values of a register field with the regular name, not the resolved name. Now it has a reference to the name resolver and resolves the name before adding a enumerated value to the register field. 
+
+The active register files are based on the parent register files of an iterated register. The parent register files were being added for every call of gen_address_block_srctail. This way, the parent_register_files was extending both on parent_register_files and on siblings_register_files. After a whole iteration through a call to gen_address_block_srctail, it is possible to simply pop the appended parent_register_file. This way, the appended parent_register_file is only present in depth but are removed when going to siblings. 
+------------------------------------------------------------------------
+r250 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-14 17:28:48 +0100 (Mon, 14 Nov 2011) | 1 line
+
+Enabling the retrieval of a pointr to the usb device structure for usb communication from the upper module. 
+------------------------------------------------------------------------
+r249 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-14 16:55:56 +0100 (Mon, 14 Nov 2011) | 1 line
+
+pwc_user working with current pwc_device_mechanism. 
+------------------------------------------------------------------------
+r248 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-14 16:54:35 +0100 (Mon, 14 Nov 2011) | 3 lines
+
+pwc_device_mechanism has to initialize DevCom pointer to devif communication system. 
+
+Doing that on pwc_devmech_init(). 
+------------------------------------------------------------------------
+r247 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-14 16:18:17 +0100 (Mon, 14 Nov 2011) | 1 line
+
+Porting pwcmech to pwc. Updating pwcmechwrap. Exporting symbols. 
+------------------------------------------------------------------------
+r246 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-14 15:53:50 +0100 (Mon, 14 Nov 2011) | 1 line
+
+Testing usage of pwcmech wrapper for pwc driver. 
+------------------------------------------------------------------------
+r245 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-14 15:12:00 +0100 (Mon, 14 Nov 2011) | 1 line
+
+Reverting driver to version 2.6.28. This is the last fully working version using v4l version 1. 
+------------------------------------------------------------------------
+r244 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-14 14:43:06 +0100 (Mon, 14 Nov 2011) | 1 line
+
+First try of embedding pwcmech. 
+------------------------------------------------------------------------
+r243 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-14 14:07:55 +0100 (Mon, 14 Nov 2011) | 1 line
+
+Importing Linux-2.6.31 pwc module to work as kernel module example for the device_mechanism kernel port. 
+------------------------------------------------------------------------
+r242 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-14 14:06:44 +0100 (Mon, 14 Nov 2011) | 1 line
+
+Initial import.
+------------------------------------------------------------------------
+r241 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-14 12:47:12 +0100 (Mon, 14 Nov 2011) | 1 line
+
+Trying to avoid the requirement of having to have the headers installed in order to compile devif itself in its source directory. 
+------------------------------------------------------------------------
+r240 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-14 12:24:32 +0100 (Mon, 14 Nov 2011) | 11 lines
+
+Creating functions to register a pwc driver with pwcmech. 
+-pwcmech_register_driver
+-pwcmech_deregister_driver
+
+-pwcmech_register_handler (dev handler coming from usb_probe)
+-pwcmech_deregister_handler
+
+Standardizing Makefile. 
+
+1) Inclusion of other ko objects for extra symbols.
+2) Export of include files made through a include file list. 
+------------------------------------------------------------------------
+r239 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-14 12:23:08 +0100 (Mon, 14 Nov 2011) | 4 lines
+
+Standardizing Makefile. 
+
+1) Inclusion of other ko objects for extra symbols.
+2) Export of include files made through a include file list. 
+------------------------------------------------------------------------
+r238 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-14 12:22:48 +0100 (Mon, 14 Nov 2011) | 4 lines
+
+Standardizing Makefile. 
+
+1) Inclusion of other ko objects for extra symbols.
+2) Export of include files made through a include file list. 
+------------------------------------------------------------------------
+r237 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-14 10:37:23 +0100 (Mon, 14 Nov 2011) | 1 line
+
+Updating module name from pwc_devmech to pwcmech. 
+------------------------------------------------------------------------
+r236 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-11 15:38:51 +0100 (Fri, 11 Nov 2011) | 3 lines
+
+1) Creating Makefile.kernel for kernel module compilation.
+2) Separating Makefile in Makefile.kernel and Makefile.user.
+3) Declaring functions with void argument where no argument is expected.
+------------------------------------------------------------------------
+r235 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-11 15:35:03 +0100 (Fri, 11 Nov 2011) | 2 lines
+
+1) Adding KBUILD_EXTRA_SYMBOLS to compilation. This defines the symbols of devif to it. 
+2) Exporting functions to kernel with EXPORT_SYMBOL_GPL. 
+------------------------------------------------------------------------
+r234 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-11 15:33:00 +0100 (Fri, 11 Nov 2011) | 3 lines
+
+1) Adding regutil.c to compilation. File was missing.
+2) Removing declaration of devcom default functions. They don't need to be declared. 
+3) Devcom default functions defined as static. 
+------------------------------------------------------------------------
+r233 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-11 15:29:10 +0100 (Fri, 11 Nov 2011) | 5 lines
+
+1) Adding header define to avoid multiple header inclusion. 
+2) Declaring structures in header as externals.
+3) Defining structures in source.
+
+TODO: instead of defining the structure, define functions with argument pointer to the structure. Not sure if it works with non-named structures, however. 
+------------------------------------------------------------------------
+r232 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-11 15:28:46 +0100 (Fri, 11 Nov 2011) | 5 lines
+
+1) Adding header define to avoid multiple header inclusion. 
+2) Declaring structures in header as externals.
+3) Defining structures in source.
+
+TODO: instead of defining the structure, define functions with argument pointer to the structure. Not sure if it works with non-named structures, however. 
+------------------------------------------------------------------------
+r231 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-11 12:33:17 +0100 (Fri, 11 Nov 2011) | 1 line
+
+Declaring and defining generated C functions with void inside. This avoids warnings in kernel module compilation. 
+------------------------------------------------------------------------
+r230 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-11 12:33:05 +0100 (Fri, 11 Nov 2011) | 1 line
+
+Declaring and defining generated C functions with void inside. This avoids warnings in kernel module compilation. 
+------------------------------------------------------------------------
+r229 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-11 12:00:33 +0100 (Fri, 11 Nov 2011) | 1 line
+
+pwc_device_mechanism: Kicking off kernel module. 
+------------------------------------------------------------------------
+r228 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-10 19:42:11 +0100 (Thu, 10 Nov 2011) | 1 line
+
+Pwc_device_mechanism re-updated to work with non-extern udev and devcom. 
+------------------------------------------------------------------------
+r227 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-10 19:37:16 +0100 (Thu, 10 Nov 2011) | 3 lines
+
+Earlier udev export removal was not complete. Now they should be. 
+
+Init.c: KERN_ALERT is part of the string argument. 
+------------------------------------------------------------------------
+r226 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-10 19:35:42 +0100 (Thu, 10 Nov 2011) | 1 line
+
+Init.c: KERN_ALERT is not an argument, it is the begin of the string. 
+------------------------------------------------------------------------
+r225 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-10 18:56:45 +0100 (Thu, 10 Nov 2011) | 1 line
+
+pwc_device_mechanism updated to work with devif and usbif alterations. 
+------------------------------------------------------------------------
+r224 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-10 18:54:25 +0100 (Thu, 10 Nov 2011) | 7 lines
+
+usbif: Adapting usbif to the DevCom structure. This structure has to be filled with the functions for communication. The function usbif_bind_com() takes care of it. 
+
+Static udev variable has been dropped. It has to be supplied by many functions as an argument now. 
+
+This has been done to be compatible with the Linux kernel. 
+
+Status: WORKING
+------------------------------------------------------------------------
+r223 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-10 18:49:46 +0100 (Thu, 10 Nov 2011) | 7 lines
+
+devif: Creating a DevCom structure. This structure contains pointers to the functions required to be registered by the communication system with the devif. 
+
+Most set/get Reg,Fields operation require that you input a pointer to a DevCom structure as first argument. 
+
+This has been done to be compatible with the Linux kernel. 
+
+Status: WORKING
+------------------------------------------------------------------------
+r222 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-10 12:26:11 +0100 (Thu, 10 Nov 2011) | 1 line
+
+Updating Makefile.kernel. 
+------------------------------------------------------------------------
+r221 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-10 12:25:24 +0100 (Thu, 10 Nov 2011) | 1 line
+
+Updating Makefile.kernel. 
+------------------------------------------------------------------------
+r220 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-10 12:20:20 +0100 (Thu, 10 Nov 2011) | 1 line
+
+Removing Makefile from usbif. User has to copy either Makefile.user or Makefile.kernel.
+------------------------------------------------------------------------
+r219 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-10 12:17:52 +0100 (Thu, 10 Nov 2011) | 1 line
+
+Removing devifdebug.h. It is the same as devifdebug.h.make. And we are trying to keep things clean here. devifdebug.h might be generated by cmake so we also don't want it to be committed by mistake. 
+------------------------------------------------------------------------
+r218 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-10 12:11:15 +0100 (Thu, 10 Nov 2011) | 1 line
+
+Adjusting #include statements on code generation to cope with kernel usage. 
+------------------------------------------------------------------------
+r217 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-10 12:10:57 +0100 (Thu, 10 Nov 2011) | 1 line
+
+Adjusting #include statements on code generation to cope with kernel usage. 
+------------------------------------------------------------------------
+r216 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-10 12:10:30 +0100 (Thu, 10 Nov 2011) | 1 line
+
+Adjusting #include statements on code generation to cope with kernel usage. 
+------------------------------------------------------------------------
+r215 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-10 12:10:17 +0100 (Thu, 10 Nov 2011) | 1 line
+
+Adjusting #include statements on code generation to cope with kernel usage. 
+------------------------------------------------------------------------
+r214 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-10 12:00:40 +0100 (Thu, 10 Nov 2011) | 1 line
+
+Updating cmake and makefiles to compile correctly for both kernel and user. Types.h explicitly defines UINT8_MAX, used by usbif. 
+------------------------------------------------------------------------
+r213 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-10 11:45:43 +0100 (Thu, 10 Nov 2011) | 1 line
+
+Updating Makefile.user so it compiles. 
+------------------------------------------------------------------------
+r212 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-10 11:43:50 +0100 (Thu, 10 Nov 2011) | 1 line
+
+There is no Makefile. There are Makefile.kernel and Makefile.user. The user copies the one he needs. 
+------------------------------------------------------------------------
+r211 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-10 11:41:20 +0100 (Thu, 10 Nov 2011) | 1 line
+
+Updating userspace Makefile. 
+------------------------------------------------------------------------
+r210 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-10 11:40:57 +0100 (Thu, 10 Nov 2011) | 1 line
+
+usbif: compiling correctly for Linux kernel. 
+------------------------------------------------------------------------
+r209 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-09 18:27:59 +0100 (Wed, 09 Nov 2011) | 3 lines
+
+1) Including devif headers with devif prefix. This has to be reviewed later if it is a nice way. 
+
+2) Solving most compilation problems related to usbif. It is now compilable for the Linux kernel. 
+------------------------------------------------------------------------
+r208 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-09 18:26:38 +0100 (Wed, 09 Nov 2011) | 1 line
+
+Installing headers into Linux source. Including the installed headers on enclosed headers. 
+------------------------------------------------------------------------
+r207 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-09 16:04:05 +0100 (Wed, 09 Nov 2011) | 1 line
+
+Including a initialization source for the devif module. 
+------------------------------------------------------------------------
+r206 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-09 15:36:52 +0100 (Wed, 09 Nov 2011) | 1 line
+
+Exporting functions to be used by other modules. 
+------------------------------------------------------------------------
+r205 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-09 15:03:19 +0100 (Wed, 09 Nov 2011) | 1 line
+
+Modifying ALLOC in interrupt function to INTALLOC. In kernel cases, it uses GPF_ATOMIC instead of GPF_KERNEL. 
+------------------------------------------------------------------------
+r204 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-09 15:00:39 +0100 (Wed, 09 Nov 2011) | 3 lines
+
+Creating a Makefile to allow for module compilation. Compilation working. 
+
+Further modifications for real module workings still required. 
+------------------------------------------------------------------------
+r203 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-07 17:47:43 +0100 (Mon, 07 Nov 2011) | 1 line
+
+Turning LEDs off. Dealing correctly with device absence. 
+------------------------------------------------------------------------
+r202 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-07 17:46:14 +0100 (Mon, 07 Nov 2011) | 1 line
+
+listutil: Including list method for removing a specific element from a list. popElement(). 
+------------------------------------------------------------------------
+r201 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-07 17:44:51 +0100 (Mon, 07 Nov 2011) | 7 lines
+
+Using enumerations of USB libraries for functions call to these libraries. 
+
+We wanted to unify libusb and Linux USB by creating a map from libusb or Linux USB to a usbif enumeration. This is dangerous. 
+
+It is easier to use the libraries' enumerations when calling these libraries. Use the usbif enumeration only when returning errors to user. 
+
+I hope most of these issues are gone. Further look is advisable though. 
+------------------------------------------------------------------------
+r200 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-07 17:31:36 +0100 (Mon, 07 Nov 2011) | 1 line
+
+Updating differences of kernel and userspace implementation for completion calls for Isochronous and Interrupt interfaces. 
+------------------------------------------------------------------------
+r199 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-11-07 17:22:33 +0100 (Mon, 07 Nov 2011) | 3 lines
+
+Solving the problem of freeing transfers before they have been completed. The transfers cannot be freed before the completion handler has been called. They are freed on the completion handler now instead of on unregister_endpoint_transfers. 
+
+Upon canceling on unregister_endpoint_transfers, the transfer on completion call has a specific status. We check that status to finally free the transfer and dequeue it from the endpoint handler (dequeue_transfer()). 
+------------------------------------------------------------------------
+r198 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-10-31 20:02:47 +0100 (Mon, 31 Oct 2011) | 6 lines
+
+Porting usbif to Linux kernel. 
+
+Unregister_endpoint_transfers has to be updated:
+    -After triggering the cancel of the transfers, the complete functions (callbacks) have to be executed one last time. Only after that, transfers can be freed. 
+
+
+------------------------------------------------------------------------
+r197 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-09-27 16:20:22 +0200 (Tue, 27 Sep 2011) | 1 line
+
+Changing target all for vloopback project. 
+------------------------------------------------------------------------
+r196 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-09-27 16:19:39 +0200 (Tue, 27 Sep 2011) | 1 line
+
+First commit of vloopback project. Works on Linux kernel 2.6.31 only. 
+------------------------------------------------------------------------
+r195 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-09-27 16:16:47 +0200 (Tue, 27 Sep 2011) | 1 line
+
+Creating trunk directory. 
+------------------------------------------------------------------------
+r194 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-09-27 16:16:26 +0200 (Tue, 27 Sep 2011) | 1 line
+
+new project added to subversion, vloopback. 
+------------------------------------------------------------------------
+r193 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-09-27 15:53:45 +0200 (Tue, 27 Sep 2011) | 1 line
+
+Tagging pwc_user working with pwc_device_mechanism and device mechanism framework release-0.2
+------------------------------------------------------------------------
+r192 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-09-27 15:52:23 +0200 (Tue, 27 Sep 2011) | 1 line
+
+Tagging device mechanism working with device_mechanism and pwc_user release-0.2
+------------------------------------------------------------------------
+r191 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-09-27 15:52:17 +0200 (Tue, 27 Sep 2011) | 3 lines
+
+Creating tags directory for pwc/device_mechanism.
+
+
+------------------------------------------------------------------------
+r190 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-09-27 15:48:59 +0200 (Tue, 27 Sep 2011) | 5 lines
+
+Creating a tag for the device mechanism working with pwc_user. 
+
+Readjusing repository for device mechanism part of framework 4/4.
+
+
+------------------------------------------------------------------------
+r189 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-09-27 15:46:38 +0200 (Tue, 27 Sep 2011) | 3 lines
+
+Readjusting repository directories for device mechanism part of framework. 3/4
+
+
+------------------------------------------------------------------------
+r188 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-09-27 15:44:46 +0200 (Tue, 27 Sep 2011) | 3 lines
+
+Readjusting repository for device mechanism part of framework 2/4.
+
+
+------------------------------------------------------------------------
+r187 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-09-27 15:37:21 +0200 (Tue, 27 Sep 2011) | 3 lines
+
+Readjusting repository 1/2. Device mechanism part of framework is considered a single project, branches/tags/trunk develop in parallel throughout single projects. 
+
+
+------------------------------------------------------------------------
+r186 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-09-27 14:53:45 +0200 (Tue, 27 Sep 2011) | 1 line
+
+pwc_user.c: main thread of pwc_user runs without suspending. We tried to suspend it and automatically wake up on occurrence of signals. It should work and it does. However, it is not fast enough to maintain the connection between pwc_user<->vloopback<->xawtv. This is something which can be dealt with in the future. 
+------------------------------------------------------------------------
+r185 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-09-27 14:04:45 +0200 (Tue, 27 Sep 2011) | 5 lines
+
+Makefile: DEBUGPARAM CONFIG_USBIF_DEBUG (not necessary here, it was simply imported with the Makefile from usbif)
+
+pwc_user.c: sendVideoCommand() was not being issued but it is necessary everytime the videoMode is changed. 
+
+acquire_data_if.c: process_usb() using now the advanced event handling for libusb. It selects on the usb file descriptors to check for events. Only if an event occurred, the libusb events are handled. 
+------------------------------------------------------------------------
+r184 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-09-27 11:03:40 +0200 (Tue, 27 Sep 2011) | 1 line
+
+usbif.c: transfer_setup() returned positive values to indicate the number of successfully transferred bytes. The framework uses only 0 as success, so we now compare the return value against the setup packet length to assert success, overflow or interruption. 
+------------------------------------------------------------------------
+r183 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-09-27 10:57:31 +0200 (Tue, 27 Sep 2011) | 1 line
+
+pwcUsb.xml: setup packet setVideoMode uses as index 4 and not 0x84.
+------------------------------------------------------------------------
+r182 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-09-27 10:57:10 +0200 (Tue, 27 Sep 2011) | 1 line
+
+pwcUsb.xml: setup packet setVideoMode uses as index 4 and not 0x84.
+------------------------------------------------------------------------
+r181 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-09-26 19:05:47 +0200 (Mon, 26 Sep 2011) | 3 lines
+
+Creating a tag for a working standalone release of pwc_user. 
+
+
+------------------------------------------------------------------------
+r180 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-09-26 19:05:05 +0200 (Mon, 26 Sep 2011) | 3 lines
+
+Creating the tags directory.
+
+
+------------------------------------------------------------------------
+r179 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-09-26 17:27:11 +0200 (Mon, 26 Sep 2011) | 1 line
+
+Copying device finalization (freeing) order from pwc_device_mechanism. The dynamic behavior when freeing transfers still might have a problem but seems harmless for now. The missing frees might come from another part of the application too. 
+------------------------------------------------------------------------
+r178 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-09-26 17:25:18 +0200 (Mon, 26 Sep 2011) | 1 line
+
+Correctly finalizing application when usb_open() fails. 
+------------------------------------------------------------------------
+r177 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-09-26 17:13:27 +0200 (Mon, 26 Sep 2011) | 11 lines
+
+Design: using pwcmech (Philips Webcam Device Mechanism) instead of our old dev_func.
+
+Changing the Makefile to our standard Makefile.
+
+frame_constructor_if.c: function compactPacket() removed, not necessary anymore, dealed with in usbif.
+
+acquire_data_if.c: 
+	acquire_frame() rewritten to check for end of frame with data delivered by framework and fill the frames accordingly. 
+	
+pwc_user.c: 
+	-Substituting previous initialization of dev_func for initialization of pwcmech. 
+------------------------------------------------------------------------
+r176 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-09-26 17:08:14 +0200 (Mon, 26 Sep 2011) | 3 lines
+
+Makefile: Creating library instead of application. 
+
+pwcmech.c: registerVideoCallback now requires input of a 4 arguments function due to change to isochronous transfer. 
+------------------------------------------------------------------------
+r175 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-09-26 17:06:08 +0200 (Mon, 26 Sep 2011) | 5 lines
+
+isostream.c: commenting out heuristics calculations for loss-free transfers from isochronous transfer registrations. 
+
+usbif.c: usb_open() returns now error if device was not found.
+
+TODO: to free a usb device can be very complicated. The library seems to automatically free transfers. We should try to separate frees from the framework (internal data) and the usb system. 
+------------------------------------------------------------------------
+r174 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-09-23 15:51:01 +0200 (Fri, 23 Sep 2011) | 13 lines
+
+Design: callback function for isochronous transfers might need information about the length of each packet inside of the big transfer. The callback is called now with these values as an argument, one array and one array size.
+	From:
+		void (*callback)(uint8_t *, size_t);
+	To:
+		void (*callback)(uint8_t * buf, size_t len, size_t * p_packet_len, size_t nr_of_packets);
+		
+intstream.c: callback function remained of the old type. Function pointer casted to 4 arguments when registering and casted to 2 arguments when calling the function.
+
+isostream.c: p_packet_len allocated in complete_iso_stream() and values filled in get_iso_length(). 
+
+p_packet_len is passed to the callback function. Upon callback resume, the allocated memory for the length is freed again. 
+
+Earlier, a total_transferred_len variable was available for each endpoint in the endpoint_handle structure. It is clear that only one transfer completes each time, so it would work to maintain that variable there and pass it to the callback function. On the other hand, there is one total_transferred_length for every transfer and not for every endpoint. Thus, the variable has been removed from the structure and is only an automatic variable passed to the callback function inside of complete_iso_stream(). 
+------------------------------------------------------------------------
+r173 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-09-09 14:14:26 +0200 (Fri, 09 Sep 2011) | 6 lines
+
+device mechanism for pwc created: pwcmech.h/c
+device mechanism wrapper for pwc driver: pwcmechwrap.h/c
+
+main.c using pwcmech.h
+
+pwcRegs.xml and pwcUsb.xml updated. 
+------------------------------------------------------------------------
+r172 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-09-01 12:44:43 +0200 (Thu, 01 Sep 2011) | 16 lines
+
+usbdata.h & helperusb.c:
+Field stdAltIf of (struct interface_configuration) dropped. 
+
+Allocation and free of (struct interface_configuration) does not include any alternate_interface now.
+
+(struct interface_configuration) includes now a list with all belonging alternate interfaces. 
+
+usbif.c:
+Usb_get_alt_if() function accepts an alternate_setting number and returns a pointer (AltIf*) to the corresponding alternate interface. 
+
+The function uses the alternateInterfaces List inside of (struct interface_configuration).
+
+Compatibility:
+removeList() tries to remove the memory allocated by void * data of a list element. The field endpoints is a list in (struct alternate_interface). Void * data was not being new allocated for it, instead it was simply being pointed to existent pointers. Therefore, we were removing the list by hand. Thus, avoiding the removal of the existent pointers.
+
+The list uses now void * data as double pointer of the pointers. The double pointer is allocated first, so it can be removed later. The list is now fully compatible with our list implementation. 
+------------------------------------------------------------------------
+r171 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-09-01 12:35:32 +0200 (Thu, 01 Sep 2011) | 5 lines
+
+(IfConf*) used to have a stdAltIf field. This has been removed now, the standard alternate interface is the first interface descriptor. It is now explicitly available to the user and created in the header as the given name of the first interface descriptor. 
+
+(IfConf*) owns the name of the interfaceDescriptorGroup appended with 'Conf'. 
+
+Allocation, population, association and freeing updated accordingly. 
+------------------------------------------------------------------------
+r170 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-08-31 12:40:37 +0200 (Wed, 31 Aug 2011) | 4 lines
+
+std_xml.c: 
+	XML schemas for usb have been updated to include endpointLinks and interfaceGroups. Interfaces of same number should be grouped into an InterfaceGroup now. Xml_interface() has been updated to do so.
+	
+
+------------------------------------------------------------------------
+r169 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-08-31 12:38:46 +0200 (Wed, 31 Aug 2011) | 19 lines
+
+udev:
+	XML schemas for usb have been updated to include endpointLinks and interfaceGroups.
+	
+examples: 
+	pwcUsb.xml changed according to new XML Schemas definitions plus endpointLinks added. 
+	
+udevparser: -it has now the native node definitions, InterfaceDescriptorGroup and EndpointLink
+
+udevcodegenerator:
+	-name resolver revamped into many classes for clarity and usage. 
+	-Generator supports now interfaceDescriptorGroup and endpointLinks
+	-alloc, free and associate generators use now the C functions defined in usbdata.h instead of ALLOCing all by themselves. 
+	-AllocGenerator creates (EndpointDesc*) pointers for endpoint links.
+	-AssociateGenerator:
+		-adds the internal endpoint links to IfConf using add_endpoint_link()
+		-after initializing stdAltIf, it sets stdAltIf as active interface using set_setting_data(). The function requires that altif is associated with ifconf and that the altif endpoints are already added to the altif.
+		
+	
+Endpoint links: the XML may define endpoint links using an endpoint address and a name. The XML parser creates two (EndpointDesc*) pointers. These are automatically re-pointed to the endpoints of the active alternate interface. The re-pointing strategy bases on the endpoint address. If the address of the link is the same of an endpoint of the active alternate interface, the link will point to that endpoint after setting. 
+------------------------------------------------------------------------
+r168 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-08-31 12:29:26 +0200 (Wed, 31 Aug 2011) | 24 lines
+
+usbif.c: usb_set_alt_if() when setting a new alternate interface to active, we want to ensure that all transfers from the previous active alternate interface are unregistered. 
+
+usbint.c: close_alternate_interface() added
+
+usbdata.h: 
+	-struct alternate_interface has now a list of its endpoints to allow automatic deregistration of endpoint transfers on new alternate interface setting.
+	-struct interface_configuration 
+		-includes a hook to the activeInterface used by usb_set_alt_if() to find out the previous active interface and deregister its tranfers. 
+		-includes a list of activeEndpointLinks. These are structures used to re-point endpoint links defined in XML. 
+		
+helperusb.c:
+	new: 
+		-alloc_endpoint_link() (static)
+		-alloc_interface()
+		-add_endpoint_link()
+		-free_interface()
+		-alloc_alternate_interface()
+		-free_alternate_interface()
+	
+	modified:
+		-associate_endpoint() also puts itself into the altif endpoint lists.
+		-set_setting_data() resets and re-points endpoint links. It also set the activeInterface pointer of ifconf to the set alternate interface.
+		
+Endpoint links: the XML may define endpoint links using an endpoint address and a name. The XML parser creates two (EndpointDesc*) pointers. These are automatically re-pointed to the endpoints of the active alternate interface. The re-pointing strategy bases on the endpoint address. If the address of the link is the same of an endpoint of the active alternate interface, the link will point to that endpoint after setting. 
+------------------------------------------------------------------------
+r167 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-08-31 12:15:37 +0200 (Wed, 31 Aug 2011) | 1 line
+
+examples/pwcRegs.xml: Changed name of bitfields on_cycle off_cycle to on_period off_period.
+------------------------------------------------------------------------
+r166 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-08-12 14:59:36 +0200 (Fri, 12 Aug 2011) | 1 line
+
+First commit of device mechanism for pwc. 
+------------------------------------------------------------------------
+r165 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-08-12 14:59:07 +0200 (Fri, 12 Aug 2011) | 1 line
+
+Initial import.
+------------------------------------------------------------------------
+r164 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-08-12 14:57:09 +0200 (Fri, 12 Aug 2011) | 3 lines
+
+XML Schema directory automatically discovered using the path where the python module is in (path of usbparser.py). 
+
+Output directory uses the same strategy. 
+------------------------------------------------------------------------
+r163 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-08-12 14:56:36 +0200 (Fri, 12 Aug 2011) | 3 lines
+
+XML Schema directory automatically discovered using the path where the python module is in (path of spiritparser.py). 
+
+Output directory uses the same strategy. 
+------------------------------------------------------------------------
+r162 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-08-12 13:40:14 +0200 (Fri, 12 Aug 2011) | 3 lines
+
+Release 0.1 of device mechanism tools. Every tool working with each other.
+
+
+------------------------------------------------------------------------
+r161 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-08-12 13:36:54 +0200 (Fri, 12 Aug 2011) | 3 lines
+
+Moving device mechanism related tools to new device mechanism trunk directory. 
+
+
+------------------------------------------------------------------------
+r160 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-08-12 13:32:52 +0200 (Fri, 12 Aug 2011) | 1 line
+
+
+------------------------------------------------------------------------
+r159 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-08-12 13:32:37 +0200 (Fri, 12 Aug 2011) | 1 line
+
+
+------------------------------------------------------------------------
+r158 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-08-12 13:32:16 +0200 (Fri, 12 Aug 2011) | 1 line
+
+Including a device_mechanism tool group.
+------------------------------------------------------------------------
+r157 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-08-08 11:48:01 +0200 (Mon, 08 Aug 2011) | 5 lines
+
+AddressBlock memory.size.range was being overwritten by spiritresolver.validate. 
+
+The temporary value was being new referenced instead of simply assuming the value of the reference. 
+
+Changed accordingly, bug solved. 
+------------------------------------------------------------------------
+r156 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-08-02 15:07:04 +0200 (Tue, 02 Aug 2011) | 1 line
+
+FindLibUSB1.0 adaptation to Fedora. 
+------------------------------------------------------------------------
+r155 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-07-29 10:40:15 +0200 (Fri, 29 Jul 2011) | 4 lines
+
+Name changes for leds register. 
+leds->led
+on->on_cycle
+off->off_cycle
+------------------------------------------------------------------------
+r154 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-07-28 19:41:31 +0200 (Thu, 28 Jul 2011) | 6 lines
+
+usbcom.c: 
+If you pass the memory address of the value, you might have to swap it or not depending on compatible or not compatible endianness. 
+
+However, host endianness is not relevant here because we are transforming to little endian manually by using shift operations. Shift operations are regular divisions and the host knows how to cast the resulting value into the 8 bit array elements. 
+
+If the buffer elements would be 16 bit or higher, every element would have to be swapped. Again, depending if the endianness of the communication is the same or different from the one of the host. 
+------------------------------------------------------------------------
+r153 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-07-28 19:14:29 +0200 (Thu, 28 Jul 2011) | 6 lines
+
+regop.c:
+	-old: regValue &= ~mask << regField->field->bitOfsfset; 
+	This was resulting in the mask part of regValue being cleaned up and then regValue was being shifted. 
+	-new:
+	regValue &= ~(mask << regField->field->bitOfsfset); 
+	Now, the mask is shifted and then the mask part of regValue is cleaned up. 
+------------------------------------------------------------------------
+r152 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-07-28 18:40:07 +0200 (Thu, 28 Jul 2011) | 1 line
+
+Another USB packets error solved. wIndex for setup packets are 0x0003 except of for changing the video mode. 
+------------------------------------------------------------------------
+r151 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-07-28 17:57:31 +0200 (Thu, 28 Jul 2011) | 1 line
+
+RETURNERROR is simply equal to INT_MAX, semicolon was a mistake. 
+------------------------------------------------------------------------
+r150 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-07-28 16:23:22 +0200 (Thu, 28 Jul 2011) | 5 lines
+
+examples/pwcUsb.xml:
+	-error copying some request numbers, corrected.
+	
+usbparser/src/udevcodegenerator.py:
+	-bit offset of bmRequestType type is 5 and not 4.
+------------------------------------------------------------------------
+r149 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-07-28 13:23:28 +0200 (Thu, 28 Jul 2011) | 5 lines
+
+Including a once_read field in the memory structure to account for caching rules at interface start. 
+
+At start, once_read is false and rules accounting for necessity of reading a register from the device results true. 
+
+A way to account for a global reset still has to be considered. A simplistic approach would be to stop and re-init the interface, pwc_ifstop followed by pwc_ifinit. 
+------------------------------------------------------------------------
+r148 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-07-27 15:48:18 +0200 (Wed, 27 Jul 2011) | 2 lines
+
+usbtransfer.c:
+Removing duplicated debug information.
+------------------------------------------------------------------------
+r147 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-07-27 15:43:25 +0200 (Wed, 27 Jul 2011) | 4 lines
+
+Including debug logging for usbif. 
+usbifdebug.h:
+	-6 categories of debug information
+	-plus, regular error, warning, info and trace
+------------------------------------------------------------------------
+r146 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-07-26 16:26:47 +0200 (Tue, 26 Jul 2011) | 1 line
+
+Removing CMakeFiles directory inside Build directory whose commit has slipped in. This directory does not belong in svn. 
+------------------------------------------------------------------------
+r145 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-07-26 16:01:55 +0200 (Tue, 26 Jul 2011) | 1 line
+
+Solving small issues and making the output compilable. 
+------------------------------------------------------------------------
+r144 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-07-26 15:57:07 +0200 (Tue, 26 Jul 2011) | 2 lines
+
+examples/pwcRegs.xml:
+	-pwc has no getPowerMode, recvPacket removed for powerMode register. 
+------------------------------------------------------------------------
+r143 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-07-26 15:32:12 +0200 (Tue, 26 Jul 2011) | 2 lines
+
+usbif:
+Including functions to handle device configurations. 
+------------------------------------------------------------------------
+r142 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-07-26 15:22:54 +0200 (Tue, 26 Jul 2011) | 1 line
+
+Using configuration name instead of simply bConfigurationValue, since the interface also interprets Configuration as a complete data type and not simply a value. 
+------------------------------------------------------------------------
+r141 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-07-26 14:39:32 +0200 (Tue, 26 Jul 2011) | 14 lines
+
+usbdata.h & helperusb.c:
+Creating functions to set and check configuration and alternate setting. 
+
+Creating functions for associating data:
+	-AltIf and IfConf
+	-EndpointDesc, Configuration and AltIf
+	
+streamif.c & usbtransfer.c:	
+Using alternate setting checks on endpoint usage. 
+
+usbif.c: 
+set_setting on usb_set_alt_if
+
+NOTE: How can I set the configuration?
+------------------------------------------------------------------------
+r140 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-07-26 14:35:33 +0200 (Tue, 26 Jul 2011) | 1 line
+
+Passing some definitions under populate to associate. Using usbif defined functions instead of handling with internal data itself. 
+------------------------------------------------------------------------
+r139 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-07-25 16:36:17 +0200 (Mon, 25 Jul 2011) | 4 lines
+
+usbif.c: UsbDevice udev was defined here. 
+	-udev is now defined by the generated code. This is simply an extern defined variable. 
+
+Complete interface still bases on udev being defined somewhere else. It must be considered if argument passing is not a better solution. 
+------------------------------------------------------------------------
+r138 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-07-25 16:29:37 +0200 (Mon, 25 Jul 2011) | 3 lines
+
+Updating bind function to use a named C structure. 
+
+Including pwcRegs.xml as xml document example under the new examples folder. 
+------------------------------------------------------------------------
+r137 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-07-25 16:16:38 +0200 (Mon, 25 Jul 2011) | 1 line
+
+Re-enabling document validation prior to code generation.
+------------------------------------------------------------------------
+r136 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-07-25 16:15:07 +0200 (Mon, 25 Jul 2011) | 3 lines
+
+Modified usb schema updated in this project. 
+
+Added pwc camera example in examples directory. A xml document with the complete usb communication description for this camera, extracted from the Linux pwc camera driver. 
+------------------------------------------------------------------------
+r135 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-07-25 16:10:38 +0200 (Mon, 25 Jul 2011) | 1 line
+
+First complete parser for usbxml. 
+------------------------------------------------------------------------
+r134 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-07-25 14:27:04 +0200 (Mon, 25 Jul 2011) | 4 lines
+
+Updating usbxml to be compatible with usbStandard.xsd.
+	-names included as configuration0..nr interface0..nr and endpoint0..nr
+	-configuration's bmAttributes are now boolean type
+	-endpoint's bmAttributes and address are now string enumerations
+------------------------------------------------------------------------
+r133 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-07-22 18:23:26 +0200 (Fri, 22 Jul 2011) | 10 lines
+
+usbparser/udev: updated schemas
+
+udevparser.py: setup_packet parses interface and endpoint names and extract their address values for wIndex.
+
+udevcodegenerator.py: -alloc complete
+				-populate:
+					-requests complete
+					-setup_packets complete
+
+TODO:
+------------------------------------------------------------------------
+r132 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-07-22 11:46:02 +0200 (Fri, 22 Jul 2011) | 1 line
+
+Creating dummy datatypes for endpoints. They help user use the right functions with the right datatypes. The functions check the correctness of the type anyways as before. 
+------------------------------------------------------------------------
+r131 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-07-22 11:07:32 +0200 (Fri, 22 Jul 2011) | 5 lines
+
+lsusb.c: schemaLocation has now both the namespace and the schema location, that's how it has to be.
+
+std_xml.c: bmAttributes were being started and ended in the wrong order because of the order adjustment. Now the start and end placements have been adjusted too.
+
+-device descriptor: iSerial -> iSerialNumber
+------------------------------------------------------------------------
+r130 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-07-22 10:54:22 +0200 (Fri, 22 Jul 2011) | 3 lines
+
+Adding namespace prefixes to generated XML.
+
+Bug solution: Endpoint->bmAttributes->usageType was mixed with transferType. 
+------------------------------------------------------------------------
+r129 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-07-21 13:54:16 +0200 (Thu, 21 Jul 2011) | 1 line
+
+Kick-off of code generator for usb xml descriptions. 
+------------------------------------------------------------------------
+r128 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-07-19 16:43:16 +0200 (Tue, 19 Jul 2011) | 5 lines
+
+Initial svn commit of usbparser.
+
+Status: complete XML data is imported to native python data structures. 
+
+Missing: code generator
+------------------------------------------------------------------------
+r127 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-07-19 16:42:06 +0200 (Tue, 19 Jul 2011) | 1 line
+
+Initial import.
+------------------------------------------------------------------------
+r126 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-07-19 10:45:32 +0200 (Tue, 19 Jul 2011) | 7 lines
+
+if_complex_data initialized to NULL.
+
+if_complex_data freed if existent on free_register(Reg * reg).
+
+This way, we can bind it to something and it will be automatically released. The other side has to remove the reference later. 
+
+For now, two setup_packets are referenced to if_complex_data through pointers. Freeing if_complex_data removes the two pointers which referenced these setup packets. But the packets are still existent on the communication layer, they have to be freed there then. 
+------------------------------------------------------------------------
+r125 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-07-19 10:42:48 +0200 (Tue, 19 Jul 2011) | 5 lines
+
+ComplexType added to register. 
+
+If sendPacket and recvPacket are set anywhere, it includes listutil.h and uses the find function to bind if_complex_data to external data types. 
+
+Requires a find function which is yet not implemented. 
+------------------------------------------------------------------------
+r124 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-07-19 10:40:56 +0200 (Tue, 19 Jul 2011) | 2 lines
+
+usbdata:
+	-send and recv_packet from usbData are now pointers. 
+------------------------------------------------------------------------
+r123 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-07-18 15:08:16 +0200 (Mon, 18 Jul 2011) | 1 line
+
+Exposing setup_transfers to user. Not all ctrl transfers can be resumed into register accesses. 
+------------------------------------------------------------------------
+r122 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-07-13 15:16:01 +0200 (Wed, 13 Jul 2011) | 1 line
+
+First complete usb communication interface. 
+------------------------------------------------------------------------
+r121 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-07-12 19:11:19 +0200 (Tue, 12 Jul 2011) | 1 line
+
+Using libusb definitions for bitmasks and field values on endpoint attribute checks for transfer allocation. 
+------------------------------------------------------------------------
+r120 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-07-12 18:35:23 +0200 (Tue, 12 Jul 2011) | 5 lines
+
+Interrupt interface programmed. 
+
+usbint.c needs to be completed.
+
+runtime environment should be dealed with on driver algorithm or policy. Possibly we can export the device handle udev and deal with polling and timing there. 
+------------------------------------------------------------------------
+r119 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-07-12 17:09:26 +0200 (Tue, 12 Jul 2011) | 1 line
+
+Refactored. 
+------------------------------------------------------------------------
+r118 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-07-11 17:41:19 +0200 (Mon, 11 Jul 2011) | 1 line
+
+streamif.h: Cosmetic adaptation of usbif API. 
+------------------------------------------------------------------------
+r117 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-07-11 17:10:55 +0200 (Mon, 11 Jul 2011) | 5 lines
+
+First commit of usbif. 
+
+Interrupt support missing.
+
+Runtime support missing. Libusb requires user to specifically call a function to allow libusb to handle transfers. 
+------------------------------------------------------------------------
+r116 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-07-11 17:08:59 +0200 (Mon, 11 Jul 2011) | 1 line
+
+Initial import.
+------------------------------------------------------------------------
+r115 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-07-11 17:08:04 +0200 (Mon, 11 Jul 2011) | 7 lines
+
+Project properties compatible between laptop and Desktop. All that changed is that make -j4 is now -j2.
+
+listutil.h independent of regdata.h and regtypes.h. 
+
+devif.h: RETURNERROR defined in new file types.h
+
+types.h: new file containing all external inclusions. Kernel and/or libc headers abstraction. 
+------------------------------------------------------------------------
+r114 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-07-11 17:05:08 +0200 (Mon, 11 Jul 2011) | 1 line
+
+Project properties compatible between laptop and Desktop. All that changed is that make -j4 is now -j2.
+------------------------------------------------------------------------
+r113 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-06-28 12:35:48 +0200 (Tue, 28 Jun 2011) | 3 lines
+
+can_xact is a small test application for the usage of devif, the spirit_parser and printcom. 
+
+As for this revision, everything is working. The memory allocations have been checked and are managed perfectly. 
+------------------------------------------------------------------------
+r112 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-06-28 12:34:04 +0200 (Tue, 28 Jun 2011) | 1 line
+
+Initial import.
+------------------------------------------------------------------------
+r111 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-06-28 12:33:25 +0200 (Tue, 28 Jun 2011) | 1 line
+
+Updated interface, now working with devif's last revision. 
+------------------------------------------------------------------------
+r110 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-06-28 12:32:49 +0200 (Tue, 28 Jun 2011) | 1 line
+
+Standard for inclusion of external libraries is <> and not "", so #include "regdata.h" now #include <regdata.h>.
+------------------------------------------------------------------------
+r109 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-06-28 12:21:28 +0200 (Tue, 28 Jun 2011) | 3 lines
+
+delayedlist.c: popField, there are multiple instances of RegField but always only one of Field. Thus, comparison if field is field in a list has to be made with field's pointer and not with RegField's. 
+
+adapt.c: function naming has been corrupted on refactoring, corrected now. 
+------------------------------------------------------------------------
+r108 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-06-28 12:18:48 +0200 (Tue, 28 Jun 2011) | 1 line
+
+Final adaptations for usage of devif's allocation system.
+------------------------------------------------------------------------
+r107 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-06-28 01:23:19 +0200 (Tue, 28 Jun 2011) | 1 line
+
+spiritcodegenerator.py: code output updated to use the structure instantiation and deletion functions of devif. 
+------------------------------------------------------------------------
+r106 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-06-28 01:21:56 +0200 (Tue, 28 Jun 2011) | 3 lines
+
+Regdata.h and comif.c: If_complex_data put to struct reg, because the interface will need it from the register and not from the memory. 
+
+Regutil.c: multiple frees shouldn't occur anymore. 
+------------------------------------------------------------------------
+r105 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-06-27 18:13:53 +0200 (Mon, 27 Jun 2011) | 9 lines
+
+1) Arrays are now gone, we are using lists for every varied size variable. Following structure fields changed:
+	-Field:
+		-enumeratedValues
+	-Register:
+		-regFilesActive
+		-altGroupsActive
+		-fields -> allFields
+		
+2) functions to allocate register and fields and include active groups and registerFiles added. Functions to create and associate memory included. 
+------------------------------------------------------------------------
+r104 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-06-24 17:36:47 +0200 (Fri, 24 Jun 2011) | 1 line
+
+First commit of usbxml. Standard usb descriptors can be output to XML. This is an adaptation of lsusb. To export XML, issue <usbxml -o filename>.
+------------------------------------------------------------------------
+r103 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-06-24 17:33:25 +0200 (Fri, 24 Jun 2011) | 1 line
+
+Initial import.
+------------------------------------------------------------------------
+r102 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-06-22 15:56:48 +0200 (Wed, 22 Jun 2011) | 3 lines
+
+Workaround so pwc_user works on 64-bit. It still works on 32-bit. 
+
+For a complete 64-bit solution, more code should be analyzed. 
+------------------------------------------------------------------------
+r101 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-06-21 11:56:52 +0200 (Tue, 21 Jun 2011) | 3 lines
+
+Makefile update:
+	-INCLUDES to INCLUDEDIRS (no -I required any longer)
+	-LIBNAMES: input library names only, no -l required systemc or libsystem will do equally.
+------------------------------------------------------------------------
+r100 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-06-21 11:56:29 +0200 (Tue, 21 Jun 2011) | 3 lines
+
+Makefile update:
+	-INCLUDES to INCLUDEDIRS (no -I required any longer)
+	-LIBNAMES: input library names only, no -l required systemc or libsystem will do equally.
+------------------------------------------------------------------------
+r99 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-06-13 14:45:38 +0200 (Mon, 13 Jun 2011) | 1 line
+
+Integer variables for loops named mostly as count or i were using the int type. Regdata structures define the number of elements to iterate as unsigned int. Thus, loop variables are now also unsigned int. 
+------------------------------------------------------------------------
+r98 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-06-12 15:14:50 +0200 (Sun, 12 Jun 2011) | 7 lines
+
+devifdebug.h.in updated to acquire variadic declaration and variable argument name from cmake and generate the header file according if GNU or not. GNU accepts named variable argument while others don't.
+
+CMakeLists.txt updated accordingly.
+
+comif.c and regop.c were calling debug logging functions prior to declaring variables. Visual C Compiler does not allow that, for interoperability the variable declarations occur now thoroughly at the begin of the function. 
+
+Compiling now under Visual Studio. 
+------------------------------------------------------------------------
+r97 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-06-12 13:50:14 +0200 (Sun, 12 Jun 2011) | 4 lines
+
+CMakeLists.txt working for:
+	-Unix Makefiles
+	-MinGW Makefiles
+	-Visual Studio 10.0 Win64
+------------------------------------------------------------------------
+r96 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-06-10 17:54:28 +0200 (Fri, 10 Jun 2011) | 1 line
+
+Committing Eclipse devif project configuration. 
+------------------------------------------------------------------------
+r95 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-06-10 17:04:06 +0200 (Fri, 10 Jun 2011) | 3 lines
+
+Adapting CMakeLists.txt and devifdebug.h.in
+
+
+------------------------------------------------------------------------
+r94 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-06-10 15:44:42 +0200 (Fri, 10 Jun 2011) | 3 lines
+
+CMakeLists.txt hasn't been committed. It is now in. 
+
+
+------------------------------------------------------------------------
+r93 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-06-10 15:41:57 +0200 (Fri, 10 Jun 2011) | 5 lines
+
+Creating a cmake configuration to compile under multi-platforms. 
+
+Makefile still present under Makefiles.make. Devifdebug.h is parsed by Cmake and reconstructed for compiler input definitions with -D. Prior devifdebug.h has been renamed to devifdebug.h.make. 
+
+
+------------------------------------------------------------------------
+r92 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-06-08 12:02:31 +0200 (Wed, 08 Jun 2011) | 1 line
+
+register_parser.py: Adjusting comment about how to define strobe registers using the vendorExtension. 
+------------------------------------------------------------------------
+r91 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-06-07 18:59:53 +0200 (Tue, 07 Jun 2011) | 3 lines
+
+address_block was intended to enable the calculation of the offset for the internal device memory on runtime. This depends on the enclosing memory bank of the register block. 
+
+This is now pre-calculated on the parser for every memory cache and is no longer necessary. Therefore, the instantiation of AddressBlock * block and all references to it have been removed. 
+------------------------------------------------------------------------
+r90 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-06-07 18:58:25 +0200 (Tue, 07 Jun 2011) | 3 lines
+
+address_block_type and mem_layout_type were intended to ne used for the calculation of the offset for the internal device memory. This depends on the enclosing memory bank of the register block. 
+
+This is now pre-calculated on the parser for every memory cache and is no longer necessary. 
+------------------------------------------------------------------------
+r89 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-06-07 18:15:33 +0200 (Tue, 07 Jun 2011) | 7 lines
+
+A register file has an own memory space inside of the address block. 
+
+Its range is an entity of the register file node. 
+
+Registers' offsets inside of register files have to comply with the range of the register file. 
+
+RulesVisitor now visits the register files and update the block_size with the register file's range. This block_size is checked against every register offset. If the offset is beyond the block_size, the xml is not valid, i.e. did not pass this rule. 
+------------------------------------------------------------------------
+r88 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-06-07 18:00:14 +0200 (Tue, 07 Jun 2011) | 2 lines
+
+delayedlist.c: -optimizing setDirty. 
+	-We don't have to remove the field from the dirtyFields list and set its dirty attribute to false to role it all back. We simply pop the field out of the dirtyFields list if it is not in the cleanFields list. Then, we proceed as usual. 
+------------------------------------------------------------------------
+r87 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-06-07 17:47:51 +0200 (Tue, 07 Jun 2011) | 5 lines
+
+Updating logging system to always output "devif: " in addition to "DEBUG: " or "ERROR: ", "WARNING: " or "INFO: ".
+
+Furthermore, output the trace level on debug outputs. 
+
+Ex: DEBUG: devif: RULES: message
+------------------------------------------------------------------------
+r86 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-06-07 17:12:19 +0200 (Tue, 07 Jun 2011) | 16 lines
+
+Updating Makefile.
+
+delayedif.c: previous_field_value is not relevant for delayedSetField since field values aren't cached anymore. 
+
+delayedlist.c: 
+	-setDirty: if a register is dirty and we try to set it again, it is not found in the cleanList. If it is not found, we clear it and try to set it again. 
+	-clearDirtyFields: tmpHook was not being updated after it has been placed back into cleanFields list. This leads to a endless loop, now tmpHook is updated every loop. 
+	
+delayedsetrules.c: 
+	-delayedSetFieldAllowedContent: this function needs to check the values of the dirty fields. The dirty fields are checked based on the current cached value of the register which is not up to date when this function is called. Therefore, we update the cache with the dirty values here and role back when the function is finished. 
+	
+regdata.h: using defined types everywhere possible to avoid confusion. (Why wouldn't we use them if we create them?)
+
+setrules.h/.c: 
+	-currentViolateWriteValueConstraint needs the value of the field to be up to date to correctly check if the value is allowed. Mostly, this was true. But for delayedSet it was not. Therefore, it is called now currentViolateWriteValueConstraint. 
+	-violateWriteValueConstraint exists now and requires a value input to make clear that it compares against that value. CurrentViolateWriteValueConstraint calls this function with the current value of the field. 
+------------------------------------------------------------------------
+r85 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-06-07 16:59:08 +0200 (Tue, 07 Jun 2011) | 1 line
+
+Updating Makefile.
+------------------------------------------------------------------------
+r84 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-06-06 11:59:51 +0200 (Mon, 06 Jun 2011) | 1 line
+
+Enumerated values prefix corrected.
+------------------------------------------------------------------------
+r83 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-06-03 17:00:48 +0200 (Fri, 03 Jun 2011) | 5 lines
+
+comif.c: genIfAddress is not possible. Banks might not be set. This has to be handled by the parser. Using now an extra field of cache memory element to handle this. 
+
+devif.h and helperif.c: enable|disable(RegFile|AltGroup) added
+
+regdata.h and helperif.c: using double pointers to regFilesActive and altGroupsActive. They are arrays to pointers, so this is what actually fits them. helperif.c:isActive() updated accordingly. 
+------------------------------------------------------------------------
+r82 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-06-03 16:56:41 +0200 (Fri, 03 Jun 2011) | 1 line
+
+free_module complete. Code generator should be complete now and compatible with devif. Tests have to be run.
+------------------------------------------------------------------------
+r81 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-06-02 16:59:40 +0200 (Thu, 02 Jun 2011) | 3 lines
+
+delayedlist.c: pushBack is not static anymore because parsed memory maps use it to initialize the data structures. 
+
+devif.h|regdata.h: pushBack and removeList function declarations moved from devif.h to regdata.h
+------------------------------------------------------------------------
+r80 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-06-02 16:57:24 +0200 (Thu, 02 Jun 2011) | 7 lines
+
+can_xact_test.xml defined enumerated values but did not set useEnumeratedValues on writeValueConstraint. Now it does.
+
+spiritresolver: -BlockOffsetVisitor has been put to spiritcodegenerator. It does not update register's addressOffsets anymore. It acquires the values of the memory layout. Afterwards it can calculate the real register offset based the register's addressOffset and the acquired memory layout information. 
+
+spiritcodegenerator: alloc, populate and associate functions complete. Free is missing, TODO. 
+
+register_parser: updated not to "conform_tobank" which was implemented by BlockOffsetVisitor. 
+------------------------------------------------------------------------
+r79 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-06-01 18:15:36 +0200 (Wed, 01 Jun 2011) | 5 lines
+
+Adding if_addr field to mem_type. The parser should fill this, so it can be used instead of the if_addr calculation on comif.c. 
+
+if_addr is the address with which the register has to be addressed when accessing the device. 
+
+if_addr takes in consideration the effect of an address block inside of a memory bank, where the block is not on row and column 0 of the bank. This creates an address offset for memory access which diverges from the given offset. 
+------------------------------------------------------------------------
+r78 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-06-01 18:03:15 +0200 (Wed, 01 Jun 2011) | 6 lines
+
+Refactored spiritcodegenerator. Instead of FileGenerator generating all the code, the code is divided into:
+	-HeaderGenerator
+	-SourceGenerator
+		-AllocGenerator
+		-PopulateGenerator
+		-AssociateGenerator
+------------------------------------------------------------------------
+r77 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-31 19:22:29 +0200 (Tue, 31 May 2011) | 8 lines
+
+Updating spirit_parser to cope with current working device interface. 
+
+spiriparser: cosmetic changes to zero default values. 
+	-0x00 to 0 (hide width, 0 has always the same representation)
+	
+spiritresolver: addressOffset is not updated anymore on BankOffsetVisitor. The visitor is being updated to offer a function to return the real/interface offset of a register. 
+
+spiritcodegenerator: undergoing many updates
+------------------------------------------------------------------------
+r76 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-30 19:05:54 +0200 (Mon, 30 May 2011) | 7 lines
+
+is_active function needed a modification to account for registerFiles inside of registerFiles.
+
+-Only if all registerFiles parent registerFiles of a register inside a registerFile are active, this register is active. 
+
+-However, if any alternateGroup of an alternate register is active, this register is active. 
+
+RegisterFiles take precedence on active decision. 
+------------------------------------------------------------------------
+r75 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-30 18:57:42 +0200 (Mon, 30 May 2011) | 1 line
+
+Printcom does not use setBaseAddress anymore. It acquires the address completely calculated by devif. It needs a setComError now to account for initialization errors from comif. Comif can set the error which will be read by the user through setComError. 
+------------------------------------------------------------------------
+r74 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-30 18:52:35 +0200 (Mon, 30 May 2011) | 5 lines
+
+Device Interface can now calculate the address of the target register in the module. 
+
+It accounts for non-standard bank/blocks definitions on spirit XML. 
+
+This is made by setting an addressBlock structure, comif.c:genIfAddress calculates target address from the structure; and reg->addressOffset and index. 
+------------------------------------------------------------------------
+r73 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-30 16:20:14 +0200 (Mon, 30 May 2011) | 1 line
+
+Updating the warning text of the modified delayedSetFieldAllowedContent rule. 
+------------------------------------------------------------------------
+r72 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-30 16:00:05 +0200 (Mon, 30 May 2011) | 3 lines
+
+Check for alternateGroup active or registerFile active is now implemented correctly.
+
+Check for violation of enumerated values constraint implemented. 
+------------------------------------------------------------------------
+r71 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-30 15:35:24 +0200 (Mon, 30 May 2011) | 8 lines
+
+Separating delayed interface from standard interface. 
+
+-regular fields have no cached values
+-standard interface use no field values, they always acquire the current value instead.
+
+-delayed interface creates dirty and clean field lists. It uses them to update the register data when data is to be sent. 
+
+-Standard interface is now independent from dirty flags. Dirty flags only kept because the quantify module is still used by delayedsetrules.c to calculate the rules for the delayed interface. 
+------------------------------------------------------------------------
+r70 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-27 17:23:17 +0200 (Fri, 27 May 2011) | 2 lines
+
+Creating list tools for delayedif.c. 
+	-pushBack, popFront, popField, iterateList, removeList
+------------------------------------------------------------------------
+r69 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-27 12:46:04 +0200 (Fri, 27 May 2011) | 5 lines
+
+-Removing values of fields. This solves many problems with multiple cached values. 
+
+Not tested yet. 
+
+delayedif.c created to separate from regular devif. It is still not implemented for the new field types. 
+------------------------------------------------------------------------
+r68 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-26 18:14:38 +0200 (Thu, 26 May 2011) | 1 line
+
+Starting definitions to include alternate registers and rules on how to enable/disable alternate registers or register files. 
+------------------------------------------------------------------------
+r67 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-26 14:15:59 +0200 (Thu, 26 May 2011) | 1 line
+
+Logging system for debugging complete. 
+------------------------------------------------------------------------
+r66 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-24 18:25:33 +0200 (Tue, 24 May 2011) | 9 lines
+
+delayedsetrules.c:
+	-delayedSetRegNeedAdaptContentBeforeWrite used strobeWriteActionDirty
+		-actually, content has to be adapted for strobeWriteAction fields which are not dirty. 
+		-strobeWriteActionDirty->strobeWriteActionNotDirty and everything updated accordingly. 
+		
+All rules.c updated to include debug information using DEVIF_DEBUG_RULES("text");
+
+devif.c: delayedSetReg can actually require no transfer:
+	-DEVIF_ERROR went to DEVIF_WARNING and text has been updated.
+------------------------------------------------------------------------
+r65 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-24 15:24:47 +0200 (Tue, 24 May 2011) | 10 lines
+
+First warning/error output method for devif. 
+
+Devif interface has been populated with information. 
+
+Besides, getrules.c:
+	-getFieldNeedModifyContent updated to modify all register since all register has been read. 
+
+This is necessary now that all fields have to be synchronized. Furthermore, function modifyValueRegister is called instead of modifyValue. 
+
+dataconstraint file updated accordingly. 
+------------------------------------------------------------------------
+r64 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-23 18:47:34 +0200 (Mon, 23 May 2011) | 1 line
+
+Committing working version of the "print" communication library. It simply prints what has been written or read from it. It connects with devif. 
+------------------------------------------------------------------------
+r63 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-23 18:46:17 +0200 (Mon, 23 May 2011) | 1 line
+
+Initial import of printcom.
+------------------------------------------------------------------------
+r62 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-23 18:41:09 +0200 (Mon, 23 May 2011) | 1 line
+
+set/getReg now update the value to send or to write to cache with the correspondent size mask. If the value to write is wider than it should be it is truncated. 
+------------------------------------------------------------------------
+r61 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-23 18:08:34 +0200 (Mon, 23 May 2011) | 5 lines
+
+Creating wideReg functionality: set/get use an index to access different parts of the register. 
+
+getReg and getField say they need transfer if any/the field is dirty. They fail then afterwards because dirty fields are not allowed to be overwritten. Dataconstraint changed accordingly. 
+
+force and cachedGets implemented. 
+------------------------------------------------------------------------
+r60 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-23 16:37:28 +0200 (Mon, 23 May 2011) | 3 lines
+
+getReg and setReg functions were issued and didn't synchronize field data. 
+
+However, field data were being used to check register content and adapt internal values. Therefore, getReg, setReg and getSetReg now update all fields on call. This way, fields can be used as internal values of the register. 
+------------------------------------------------------------------------
+r59 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-20 17:22:59 +0200 (Fri, 20 May 2011) | 4 lines
+
+Updating vendorExtension strobe to include 3 fields:
+	-bool write
+	-bool read
+	-fieldsize noAction (this uses regsize for default value, possibly change)
+------------------------------------------------------------------------
+r58 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-20 15:45:48 +0200 (Fri, 20 May 2011) | 1 line
+
+Makefile link creation updated with -f (force) not to give errors on remakes. 
+------------------------------------------------------------------------
+r57 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-20 15:42:26 +0200 (Fri, 20 May 2011) | 4 lines
+
+First issue with register and fields values not synchronized. 
+
+-setRegAllowedContent function checks if field values are allowed but its input is a register. 
+	-If the register value has been written to but its fields are still not synchronized, the function does not work correctly. 
+------------------------------------------------------------------------
+r56 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-20 15:39:12 +0200 (Fri, 20 May 2011) | 7 lines
+
+com.h is now an interface to communication systems
+
+old com.h/c are now comif.h/c
+
+transfer.h/c are now devif.h/c as interface to devices
+
+update.c and modify.c still had non instantiated Field pointers whose internal pointers were being referenced (segmentation fault). These are now proper automatic variables. 
+------------------------------------------------------------------------
+r55 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-19 18:03:02 +0200 (Thu, 19 May 2011) | 3 lines
+
+Makefile does not work on both Windows and Linux. Linux version in. 
+
+getrules.c: input argument on function call of checkField was (Field *) and has been updated to (struct bitField_type *) as implemented. 
+------------------------------------------------------------------------
+r54 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-19 17:51:05 +0200 (Thu, 19 May 2011) | 5 lines
+
+Makefile adapted to work more or less on Windows. 
+
+adapt.c function name mismatch between header and source resolved. 
+
+transfer.c function name mismatch between header and source resolved. 
+------------------------------------------------------------------------
+r53 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-19 17:29:48 +0200 (Thu, 19 May 2011) | 3 lines
+
+Check functions have to be redefined to checkReg or checkField. getrules.c was still needing these modifications. Now done. 
+
+transfer.c was still calling a function with its old name: getFieldNeedModifyValues changed to -> getFieldNeedModifyContent
+------------------------------------------------------------------------
+r52 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-19 17:15:53 +0200 (Thu, 19 May 2011) | 1 line
+
+Removing example parsed files whose data can be accessed by devif. Now they should be used by the device mechanism part of driver and accesses to registers are made through devif. 
+------------------------------------------------------------------------
+r51 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-19 17:07:42 +0200 (Thu, 19 May 2011) | 1 line
+
+Polishing the Makefile.
+------------------------------------------------------------------------
+r50 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-19 17:06:26 +0200 (Thu, 19 May 2011) | 1 line
+
+Changing Eclipse project definitions for adapting name to devif.
+------------------------------------------------------------------------
+r49 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-19 17:05:33 +0200 (Thu, 19 May 2011) | 1 line
+
+Changing name again to be the same as its library. 
+------------------------------------------------------------------------
+r48 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-19 17:00:57 +0200 (Thu, 19 May 2011) | 1 line
+
+Project compiled!
+------------------------------------------------------------------------
+r47 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-19 14:20:20 +0200 (Thu, 19 May 2011) | 3 lines
+
+This is not the complete device_mechanism. A complete device mechanism is only provided by a part of a specific driver, this and a communication system. 
+
+This is a device interface, offering the usage of device internals to the driver. Through writes or reads to internal registers (device internals), it can be controlled. 
+------------------------------------------------------------------------
+r46 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-19 10:25:41 +0200 (Thu, 19 May 2011) | 3 lines
+
+dataconstraint cosmetic changes. 
+
+setrules.c includes regdata.h not old c_header.h
+------------------------------------------------------------------------
+r45 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-18 17:42:03 +0200 (Wed, 18 May 2011) | 1 line
+
+Changed modifyValue arguments on function calls of transfer.c. WRITE is not the required argument but modifiedWriteValue.
+------------------------------------------------------------------------
+r44 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-18 17:09:05 +0200 (Wed, 18 May 2011) | 4 lines
+
+First design complete. Untested and never compiled. 
+
+alternate register missing.  
+Enumerated values missing. 
+------------------------------------------------------------------------
+r43 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-18 17:08:36 +0200 (Wed, 18 May 2011) | 3 lines
+
+Removing dataconstraints.xlsx to try to reinput a new one from Eclipse. Eclipse was not checking it out. 
+
+
+------------------------------------------------------------------------
+r42 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-17 13:33:31 +0200 (Tue, 17 May 2011) | 5 lines
+
+Many updates. 
+
+delayedSet and delayedGet functions complete. 
+
+Ongoing work on creating getset functions on transfer.c
+------------------------------------------------------------------------
+r41 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-17 12:14:43 +0200 (Tue, 17 May 2011) | 1 line
+
+data constraints updated
+------------------------------------------------------------------------
+r40 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-16 18:03:24 +0200 (Mon, 16 May 2011) | 3 lines
+
+Creating a new structure for the project. Old c_header.h and c_functions.c are now:
+c_header.h -> regdata.h
+c_functions.c -> transfer.c
+------------------------------------------------------------------------
+r39 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-16 13:57:12 +0200 (Mon, 16 May 2011) | 1 line
+
+Committing the first complete rule system. 
+------------------------------------------------------------------------
+r38 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-13 18:44:56 +0200 (Fri, 13 May 2011) | 7 lines
+
+Creating consistent data constraint analysis functions. 
+
+quantify module: helper functions to iterate through fields and return number of constraints found
+
+getrules: data constraint rules required by getReg and getField
+
+setrules: data constraint rules required by setReg and setField
+------------------------------------------------------------------------
+r37 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-13 18:40:59 +0200 (Fri, 13 May 2011) | 1 line
+
+Update of data constraints processing design. New thoughts after firsts implementations. 
+------------------------------------------------------------------------
+r36 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-13 10:38:47 +0200 (Fri, 13 May 2011) | 1 line
+
+Include a design folder. Enclosed is an analysis of the possible data inputs and its constraints related to the main tasks of the interface, register and fields with their set/get functions. 
+------------------------------------------------------------------------
+r35 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-09 18:11:32 +0200 (Mon, 09 May 2011) | 3 lines
+
+c_functions.c: details of delayedSetField, check if register writable after every function call.
+
+rulecheck.c: code for check of modifiedWriteValueConstraints for every children was not right.
+------------------------------------------------------------------------
+r34 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-09 17:37:37 +0200 (Mon, 09 May 2011) | 1 line
+
+Small update to delayedSetReg and setReg
+------------------------------------------------------------------------
+r33 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-09 17:31:26 +0200 (Mon, 09 May 2011) | 7 lines
+
+Trying to create a clear flow control with respective modules.
+
+Clear flow control: c_functions.c
+
+Underlying send/recv functions: com.c
+
+helpers: access.c rulecheck.c syncsteps.c update.c modify.c
+------------------------------------------------------------------------
+r32 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-06 19:01:59 +0200 (Fri, 06 May 2011) | 1 line
+
+c_header.h: reset data field of structure definition of alternate register changed to reset_type instead of unsigned int. This accords with spirit_parser implementation and with IP-XACT standard. 
+------------------------------------------------------------------------
+r31 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-06 18:30:57 +0200 (Fri, 06 May 2011) | 3 lines
+
+Commiting device_mechanism for the first time. 
+
+Program not functional yet. Working out set/get rules for fields and registers. 
+------------------------------------------------------------------------
+r30 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-06 18:29:49 +0200 (Fri, 06 May 2011) | 1 line
+
+Initial import: device_mechanism.
+------------------------------------------------------------------------
+r29 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-04 11:02:29 +0200 (Wed, 04 May 2011) | 1 line
+
+First comit of pwc_user/trunk to department repository. 
+------------------------------------------------------------------------
+r28 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-04 10:53:17 +0200 (Wed, 04 May 2011) | 1 line
+
+creation of the trunk directory of new project pwc_user
+------------------------------------------------------------------------
+r27 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-04 10:52:45 +0200 (Wed, 04 May 2011) | 1 line
+
+Creating a new project in my department repository. 
+------------------------------------------------------------------------
+r26 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-05-02 09:33:28 +0200 (Mon, 02 May 2011) | 2 lines
+
+spiritcodegenerator.py: #undef SCOPE before defining a new one
+	-avoids compiler warnings
+------------------------------------------------------------------------
+r25 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-01-17 14:49:12 +0100 (Mon, 17 Jan 2011) | 3 lines
+
+Updated XML files to import index.xsd instead of memoryMap.xsd. index.xsd is a wildcard for any main/base XACT element. 
+
+Included pci.xml SystemRDL example to the delivered bundle.
+------------------------------------------------------------------------
+r24 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-01-14 16:46:33 +0100 (Fri, 14 Jan 2011) | 9 lines
+
+This is the first release of spirit_parser. 
+
+It is able to read a memoryMap XML file created using the XML Schema of IP-XACT. Spirit_parser uses the version of the standard IEEE 1685. 
+
+It generates standard C code. The header used for the generated files is belongs to the device_mechanism framework. 
+
+Everythins is covered but parameters. The output of the program states that.
+
+Besides, we included a vendorExtension called strobe (<strobe>write</strobe> or <strobe>read</strobe>). That signalizes that the register or register bitfield triggers an action everytime it is read/written from/to. 
+------------------------------------------------------------------------
+r23 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-01-14 16:35:45 +0100 (Fri, 14 Jan 2011) | 20 lines
+
+spiritparser & spiritresolver:
+  'notparsed' instead of 'empty':
+    -sometimes elements might be named 'empty', which would clash with our definition of a notparsed item of an elements. Now these elements are called 'notparsed' instead.
+    -if spiritparser parses any item whose name is 'notparsed', it outputs a warning about it, informing which node has that name and that its name will be changed to blank ''.
+
+  Reset value and mask widths are dependent of the register width. Now the DefaultsVisitor acquires the width of the containing register and updates default value and masks to accord to the respective register width. 
+  
+  Base address of elements inside of a bank (banks or address blocks) have to be hierarchically taken of that bank because base address is not defined for internal elements.
+    -base address is now a string, initialized to 'notparsed'. If parsed it gets the string defined in the XML.
+    -HierarchicalVisitor now updates base addresses of internal banks and address blocks to the base address of their respective root bank.
+
+spiritcodegenerator & spiritresolver:
+  Bug where enumerations were checked for clashes but nameresolver was not used to resolve them. 
+    -Now code generators always output names through the nameresolver. 
+  Instead of writing integer directly, address elements are now written out as hexadecimals because I like it like that.
+
+generic_example.xml is a memory map imported from the SystemRDL group. 
+  -With the updates above, it has been parsed without issues and its result could be compiled. 
+  
+Old test XMLs have been moved to tests directory. 
+------------------------------------------------------------------------
+r22 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-01-14 11:34:36 +0100 (Fri, 14 Jan 2011) | 3 lines
+
+spiritparser:
+    -comment on walk function
+
+------------------------------------------------------------------------
+r21 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-01-14 11:15:29 +0100 (Fri, 14 Jan 2011) | 10 lines
+
+First attempt of generalizing the crawling mechanism of the codegenerator classes to something standard. 
+
+The classes inherit from Traverser and Visitor to traverse the tree and visit the nodes. 
+
+1) For now, the intern code generating classes are too non-standard and make it difficult to adapt to the new technique.
+
+2) Traverser is immature yet. There is no general solution to walk the nodes. It uses a breadth first tree walk on namespaces (AddressBlock and RegisterFile). On the others depth first. 
+
+3) Besides that, RegisterFile nodes are not visited like other nodes, the father RegisterFile calls visit on the children and then traverse itself on the children. That is confusing because other nodes are called directly when they are traversed. 
+	-Probably we are not traversing correctly there. We have to look for a better way of breadth first traversing. 
+------------------------------------------------------------------------
+r20 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-01-14 11:14:41 +0100 (Fri, 14 Jan 2011) | 2 lines
+
+Creating remaining subversion directories, branches and tags.
+
+------------------------------------------------------------------------
+r19 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-01-11 16:23:20 +0100 (Tue, 11 Jan 2011) | 14 lines
+
+spiritcodegenerator.py:
+	-name resolver recoded: not a visitor anymore
+		-it has to check each namespace (struct: address_block or register_file) for name clashes
+		-name clashes can occur between following elements by themselves and between each other:
+			-register
+			-field
+			-alternateRegister
+			-registerFile
+		-name clashes of enumerations can also occur between following elements:
+			-registerFile
+			-alternateGroup
+			-field: enumeratedValues
+		-RegisterFile appear twice so getname is used on second appearance (check_enum_clashes) to consider new name
+	-wrong name for alternate_registers (alternate_register) has been changed too
+------------------------------------------------------------------------
+r18 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-01-04 19:43:33 +0100 (Tue, 04 Jan 2011) | 7 lines
+
+Enumerations are created using macros now: 
+	-creation uses #define SCOPE followed by NUM(enumerator)
+	-enumerators are retrieved by using GETNUM(SCOPE, enumerator)
+		-parser uses that to assign value to alternateGroups based on the enumeration
+
+TODO:
+	-second check of possible name clashes
+------------------------------------------------------------------------
+r17 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2011-01-03 18:33:01 +0100 (Mon, 03 Jan 2011) | 6 lines
+
+First enumeration approach:
+	-all enumerations are defined in their specific structure
+	
+TODO:
+	-second check of possible name clashes
+	-define macros to create enumerators with "namespaces" because all enumerators are defined globally
+------------------------------------------------------------------------
+r16 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2010-12-22 17:34:00 +0100 (Wed, 22 Dec 2010) | 17 lines
+
+spiritcodegenerator.py:
+    -generalization of line formatting (last revision)
+        -indentation
+    -class NameResolver resolves nameclashes
+        Avoided by NameResolver:
+            -nameclashes of fields belonging to registers in a same union
+            -nameclashes of fields and alternateRegister's fields in a same union
+        Avoided by XML Schema:
+            -nameclash of register_files and address_blocks
+            -nameclashes of alternateRegisters
+    -class FilesGenerator:
+        -every address_block has its own file and is wrapped in a union
+        -every register file has its own union
+
+    TODO: enumerations for alternateRegister's alternateGroups. And for registerFile "names"? 
+
+
+------------------------------------------------------------------------
+r15 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2010-12-21 15:58:14 +0100 (Tue, 21 Dec 2010) | 11 lines
+
+Code clearance:
+	-spiritparser:
+		-memory map has now function get_banks
+			-function get_register_blocks only returns a list of register_blocks
+	
+	-spiritresolver:
+		-conform_to_bank uses now get_bank followed by bank.get_register_blocks to conform to bank
+		-this makes it more clear and removes the necessity of returning the containing bank together with the register_block
+		
+	-spiritcodegenerator:
+		generalization of line formatting:
+------------------------------------------------------------------------
+r14 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2010-12-20 11:29:46 +0100 (Mon, 20 Dec 2010) | 5 lines
+
+TypeIdentifier bug solved: 
+	-if a registerFile defines a type and any child of it in any hierarchy reuses it,
+		this leads to a redefinition of itself and thus to an endless loop
+	-this case is now checked while updating types
+	-types are not updated and a warning is printed out
+------------------------------------------------------------------------
+r13 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2010-12-16 16:17:31 +0100 (Thu, 16 Dec 2010) | 5 lines
+
+Complete refactoring:
+	-spiritxml->spiritparser: -AddressBlock, Bank and MemoryMap implement all Node functionalities
+							  -Bank completely accords to spirit definition, only contains address_blocks from itself, and contains internal banks. Bank.get_register_blocks return a complete register_block list, also from internal banks.
+	-spiritresolver: -typeIdentifier visitor and defaults visitor generalized
+					 -all resolvers work on memory_map directly now
+------------------------------------------------------------------------
+r12 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2010-12-13 18:23:16 +0100 (Mon, 13 Dec 2010) | 7 lines
+
+spiritxml: 
+	-SpiritMemoryMap has now bank and address_blocks instances, as in XML
+	-SpiritMemoryMap, SpiritBank and SpiritAddressBlock are now _SpiritNode. Resolver checks whole SpiritMemoryMap for typeIdentifiers. They are not yet fully _SpiritNodes. They don't have import_values and set_default funtions, it is possibly useful to re-adapt them. 
+	Note: SpiritAddressBlock's import_value is not fully compatible, neither set_default. 
+	
+spiritresolver:
+	-checks whole SpiritMemoryMap for identifiers and updates. Deepcopy necessary and used. 
+------------------------------------------------------------------------
+r11 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2010-12-13 11:21:56 +0100 (Mon, 13 Dec 2010) | 6 lines
+
+Architectural change, all modules are now independent. 
+	-spiritxml receives the XML document and generates the abstract data
+
+	-spiritcode divided into:
+		-spiritresolver update hierarchical and defaults values, offset values according to bank position and check defined rules for code consistency. Furthermore, it records element values for types defined by typeIdentifier and substitutes it on following appearances of the same type. 
+		-spiritcodegenerator generate code from parsed/resolved data. 
+------------------------------------------------------------------------
+r10 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2010-12-10 16:54:00 +0100 (Fri, 10 Dec 2010) | 1 line
+
+Support for typeIdentifiers added
+------------------------------------------------------------------------
+r9 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2010-12-09 18:24:47 +0100 (Thu, 09 Dec 2010) | 4 lines
+
+-alternateGroup enumeration created
+
+-reset has now a valid field
+	-valid is now filled globally by assign_default, not locally, writeVendorConstraint and so on
+------------------------------------------------------------------------
+r8 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2010-12-09 15:08:19 +0100 (Thu, 09 Dec 2010) | 3 lines
+
+First header/source separation
+
+Global address offset calculation (BankOffsetVisitor) had a bug which is solved now. 
+------------------------------------------------------------------------
+r7 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2010-12-03 19:14:05 +0100 (Fri, 03 Dec 2010) | 7 lines
+
+spiritxml.py:
+-bugs related to non-creation of alternateRegisters. SpiritAlternateRegister class had no specific import_values function but it was required because it has to go down two hierarchies to grab the values, so the standard _SpiritNode.import_values function does not work. 
+-MemCoord has now a function to return coordinates in a Cartesian map corresponding to range and width in an object. Used to recalculate register offsets when block does not correspond to full memory space. 
+
+spiritcode.py: 
+-BankOffsetVisitor recalculates the offset for every register. 
+-Bugs related to the code generation of alternateGroups solved.
+------------------------------------------------------------------------
+r6 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2010-12-03 12:58:17 +0100 (Fri, 03 Dec 2010) | 1 line
+
+spiritcode.py: SpiritCodeGenerator adapted to work with created tree of static data elements, not dynamic anymore. It means, functions don't have to call hasattr, length of array instead. 
+------------------------------------------------------------------------
+r5 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2010-11-29 19:35:33 +0100 (Mon, 29 Nov 2010) | 7 lines
+
+-Base data classes (SpiritRegister, SpiritField, etc) are now explicitly defined in spiritxml, not dynamically anymore. 
+
+-Base data classes inherit from class Node. Class Node has a walk function, which get a visitor as input and iterate through every element of the Node calling the visitor. 
+
+-spiritcode rules, hierarchy and defaults appliances changed to visitor implementations. Code cleaner and shorter. 
+
+Note: spiritcode calls hasattr seldom now. Moreover, no tree walking functions are in use yet. The walk function and the visitors are enough. 
+------------------------------------------------------------------------
+r4 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2010-11-29 10:40:40 +0100 (Mon, 29 Nov 2010) | 5 lines
+
+spiritxml:
+	-function to generate address_blocks put into bank class
+	-bank class now has a generator: 
+		-creates itself
+		-class has a hook to all address_blocks containing registers: register_blocks
+------------------------------------------------------------------------
+r3 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2010-11-26 18:54:52 +0100 (Fri, 26 Nov 2010) | 7 lines
+
+-Analyze memory structure. Look for an address block with registers and account for bank position to define place in memory. 
+
+-Later this has to be taken into account when it is a bank connected in parallel. A bank connected in parallel is addressed through a shift on the least significant bits. That means every register in it has to be further shifted according to the position of the block in memory. 
+
+-Memory size has been stored in memory_map class for that. Address block class contains the offset of the containing bank. 
+
+-Size values have to be added, I think. 
+------------------------------------------------------------------------
+r2 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2010-11-25 13:18:15 +0100 (Thu, 25 Nov 2010) | 1 line
+
+First commit of spirit_parser project, only required files in. 
+------------------------------------------------------------------------
+r1 | rfajardo@ZITI.UNI-HEIDELBERG.DE | 2010-11-25 13:08:09 +0100 (Thu, 25 Nov 2010) | 7 lines
+
+Inaugural commit of repository.
+
+Projects:
+    -interfaces copied from old repository, old logs included.
+    -spirit_parser started here->files are going to be commited afterwards.
+
+
+------------------------------------------------------------------------
