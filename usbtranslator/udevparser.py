@@ -13,6 +13,11 @@ from os import path
 udev_namespace = "http://www.ziti.uni-heidelberg.de/XMLSchemas/usbDevice"
 udev_ns = "{%s}" % udev_namespace
 
+class Comment(etree.CommentBase):
+    def strip_tag(self):
+        return ''
+
+    stripped_tag = property(strip_tag)
 
 class Element(etree.ElementBase):
     def strip_tag(self):
@@ -33,8 +38,12 @@ class UdevLookup(etree.CustomElementClassLookup):
     def lookup(self, node_type, document, namespace, name):
         if namespace == udev_namespace:
             return UdevElement
-        else:
+        elif node_type == 'element':
             return Element
+        elif node_type == 'comment':
+            return Comment
+        else:
+            return None
 
 class Node(object):
     node_classes = {}

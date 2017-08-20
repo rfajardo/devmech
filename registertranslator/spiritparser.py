@@ -13,6 +13,11 @@ from os import path
 spirit_namespace = "http://www.spiritconsortium.org/XMLSchema/SPIRIT/1685-2009"
 spirit_ns = "{%s}" % spirit_namespace
 
+class Comment(etree.CommentBase):
+    def strip_tag(self):
+        return ''
+
+    stripped_tag = property(strip_tag)
 
 class Element(etree.ElementBase):
     def strip_tag(self):
@@ -33,8 +38,12 @@ class SpiritLookup(etree.CustomElementClassLookup):
     def lookup(self, node_type, document, namespace, name):
         if namespace == spirit_namespace:
             return SpiritElement
-        else:
+        elif node_type == 'element':
             return Element
+        elif node_type == 'comment':
+            return Comment
+        else:
+            return None
 
 class Node(object):
     node_classes = {}
